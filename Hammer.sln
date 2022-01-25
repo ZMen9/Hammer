@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32106.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{66A18465-788A-49A1-94A4-A83EC8F341F5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hammer", "Hammer\Hammer.vcxproj", "{62480888-F803-4BDC-981E-4EB28C253875}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62480888-F803-4BDC-981E-4EB28C253875}.Debug|x64.ActiveCfg = Debug|x64
+		{62480888-F803-4BDC-981E-4EB28C253875}.Debug|x64.Build.0 = Debug|x64
+		{62480888-F803-4BDC-981E-4EB28C253875}.Release|x64.ActiveCfg = Release|x64
+		{62480888-F803-4BDC-981E-4EB28C253875}.Release|x64.Build.0 = Release|x64
+		{66A18465-788A-49A1-94A4-A83EC8F341F5}.Debug|x64.ActiveCfg = Debug|x64
+		{66A18465-788A-49A1-94A4-A83EC8F341F5}.Debug|x64.Build.0 = Debug|x64
+		{66A18465-788A-49A1-94A4-A83EC8F341F5}.Release|x64.ActiveCfg = Release|x64
+		{66A18465-788A-49A1-94A4-A83EC8F341F5}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0145671A-26A1-45CF-B35F-EC51B5326F11}
+	EndGlobalSection
+EndGlobal
