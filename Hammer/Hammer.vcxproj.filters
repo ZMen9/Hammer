@@ -1,36 +1,73 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="源文件">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Hammer">
+      <UniqueIdentifier>{5F5DEBB6-4BFF-158D-34BA-29E120FB9CDD}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Hammer\Events">
+      <UniqueIdentifier>{6368C4C2-CF28-40F9-9863-897604E384D5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="资源文件">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="PlatForm">
+      <UniqueIdentifier>{0A3B77B4-F607-D2BF-1F21-C0670B4D074E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlatForm\Windows">
+      <UniqueIdentifier>{444F6CFC-3048-8B4E-597A-70D345D26A5A}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Hammer\Core.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+    <ClInclude Include="src\Hammer.h" />
     <ClInclude Include="src\Hammer\Application.h">
-      <Filter>头文件</Filter>
+      <Filter>Hammer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Hammer.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\Hammer\Core.h">
+      <Filter>Hammer</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\EntryPoint.h">
-      <Filter>头文件</Filter>
+      <Filter>Hammer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Hammer\Events\ApplicationEvent.h">
+      <Filter>Hammer\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Events\Event.h">
+      <Filter>Hammer\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Events\KeyEvent.h">
+      <Filter>Hammer\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Events\MouseEvent.h">
+      <Filter>Hammer\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Layer.h">
+      <Filter>Hammer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\LayerStack.h">
+      <Filter>Hammer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Log.h">
+      <Filter>Hammer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlatForm\Windows\WindowsWindow.h">
+      <Filter>PlatForm\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window.h" />
+    <ClInclude Include="src\hmpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Hammer\Application.cpp">
-      <Filter>源文件</Filter>
+      <Filter>Hammer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Hammer\Layer.cpp">
+      <Filter>Hammer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\LayerStack.cpp">
+      <Filter>Hammer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\Log.cpp">
+      <Filter>Hammer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlatForm\Windows\WindowsWindow.cpp">
+      <Filter>PlatForm\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hmpch.cpp" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,12 @@
+[submodule "Hammer/vendor/spdlog"]
+	path = Hammer/vendor/spdlog
+	url = https://github.com/gabime/spdlog
+[submodule "Hammer/vendor/GLFW"]
+	path = Hammer/vendor/GLFW
+	url = https://github.com/ZMen9/glfw.git
+[submodule "imgui"]
+	path = imgui
+	url = https://github.com/ZMen9/imgui.git
+[submodule "Hammer/vendor/imgui"]
+	path = Hammer/vendor/imgui
+	url = https://github.com/ZMen9/imgui.git
