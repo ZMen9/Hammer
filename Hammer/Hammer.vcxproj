@@ -80,11 +80,10 @@
       <PrecompiledHeaderFile>hmpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HM_PLATFORM_WINDOWS;HM_BUILD_DLL;GLFW_INCLUDE_NONE;HM_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -94,7 +93,7 @@
       <ImportLibrary>..\bin\Debug-windows-x86_64\Hammer\Hammer.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Debug-windows-x86_64\Hammer\Hammer.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Hammer\Hammer.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Hammer\Hammer.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Debug-windows-x86_64\Hammer\Hammer.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Hammer\Hammer.dll "..\bin\Debug-windows-x86_64\Sandbox\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Hammer\Hammer.dll "..\bin\Debug-windows-x86_64\Sandbox\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -103,14 +102,13 @@
       <PrecompiledHeaderFile>hmpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HM_PLATFORM_WINDOWS;HM_BUILD_DLL;GLFW_INCLUDE_NONE;HM_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -121,7 +119,7 @@
       <ImportLibrary>..\bin\Release-windows-x86_64\Hammer\Hammer.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Release-windows-x86_64\Hammer\Hammer.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Hammer\Hammer.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Hammer\Hammer.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Release-windows-x86_64\Hammer\Hammer.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Hammer\Hammer.dll "..\bin\Release-windows-x86_64\Sandbox\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Hammer\Hammer.dll "..\bin\Release-windows-x86_64\Sandbox\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -130,14 +128,13 @@
       <PrecompiledHeaderFile>hmpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HM_PLATFORM_WINDOWS;HM_BUILD_DLL;GLFW_INCLUDE_NONE;HM_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -148,7 +145,7 @@
       <ImportLibrary>..\bin\Dist-windows-x86_64\Hammer\Hammer.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Dist-windows-x86_64\Hammer\Hammer.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Hammer\Hammer.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Hammer\Hammer.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Dist-windows-x86_64\Hammer\Hammer.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Hammer\Hammer.dll "..\bin\Dist-windows-x86_64\Sandbox\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Hammer\Hammer.dll "..\bin\Dist-windows-x86_64\Sandbox\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -160,18 +157,23 @@
     <ClInclude Include="src\Hammer\Events\Event.h" />
     <ClInclude Include="src\Hammer\Events\KeyEvent.h" />
     <ClInclude Include="src\Hammer\Events\MouseEvent.h" />
+    <ClInclude Include="src\Hammer\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Hammer\Layer.h" />
     <ClInclude Include="src\Hammer\LayerStack.h" />
     <ClInclude Include="src\Hammer\Log.h" />
+    <ClInclude Include="src\PlatForm\OpenGL\ImGuiOpenGLRenderer.h" />
+    <ClInclude Include="src\PlatForm\OpenGL\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="src\PlatForm\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\hmpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Hammer\Application.cpp" />
+    <ClCompile Include="src\Hammer\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Hammer\Layer.cpp" />
     <ClCompile Include="src\Hammer\LayerStack.cpp" />
     <ClCompile Include="src\Hammer\Log.cpp" />
+    <ClCompile Include="src\PlatForm\OpenGL\ImGuiOpenGLRenderer.cpp" />
     <ClCompile Include="src\PlatForm\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\hmpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

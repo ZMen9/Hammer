@@ -47,4 +47,20 @@ class HAMMER_API KeyReleasedEvent : public KeyEvent {
   EVENT_CLASS_TYPE(kKeyReleased)
 };
 
+class HAMMER_API KeyTypedEvent : public KeyEvent {
+ public:
+  KeyTypedEvent(int keycode)
+      : KeyEvent(keycode){}
+
+
+  std::string ToString() const override {
+    std::stringstream ss;
+    ss << "KeyTypedEvent: " << keycode_;
+    return ss.str();
+  }
+
+  EVENT_CLASS_TYPE(kKeyTyped)
+};
+
+
 }  // namespace hammer

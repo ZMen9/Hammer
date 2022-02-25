@@ -5,6 +5,7 @@
 #include "Hammer/Application.h"
 #include "Hammer/Layer.h"
 #include "Hammer/Log.h"
+#include "Hammer/ImGui/ImGuiLayer.h"
 
 // include Entry Point
 #include "Hammer/EntryPoint.h"

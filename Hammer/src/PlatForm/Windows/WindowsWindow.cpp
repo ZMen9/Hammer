@@ -1,11 +1,11 @@
 #include "hmpch.h"
 #include "WindowsWindow.h"
 
+#include <glad/glad.h>
+
 #include "Hammer/Events/ApplicationEvent.h"
 #include "Hammer/Events/KeyEvent.h"
 #include "Hammer/Events/MouseEvent.h"
-#include <glad/glad.h>
-
 
 namespace hammer {
 
@@ -49,8 +49,8 @@ void WindowsWindow::Init(const WindowProps& props) {
     // TODO: glfwTerminate on system shutdown
     int success = glfwInit();
     HM_CORE_ASSERT(success, "Could not initialize GLFW!");
-    
-    glfwSetErrorCallback(GLFWErrorCallback); 
+
+    glfwSetErrorCallback(GLFWErrorCallback);
     kglfwInitialized = true;
   }
 
@@ -103,6 +103,14 @@ void WindowsWindow::Init(const WindowProps& props) {
         break;
       }
     }
+  });
+
+  glfwSetCharCallback(window_, [](GLFWwindow* window, unsigned int key) {
+    WindowData& data =
+        *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
+
+    KeyTypedEvent event(key);
+    data.EventCallback(event);
   });
 
   glfwSetMouseButtonCallback(

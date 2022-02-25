@@ -19,6 +19,7 @@ enum class EventType {
   //
   kKeyPressed,
   kKeyReleased,
+  kKeyTyped,
   //
   kMouseButtonPressed,
   kMouseButtonReleased,
@@ -78,7 +79,8 @@ class EventDispatcher {
   template <typename T>
   bool Dispatch(EventFn<T> func) {
     if (event_.GetEventType() == T::GetStaticType()) {
-      event_.handled_ = func(*(T*)&event_);
+      event_.handled_ = func(*(T*)&event_);// 多余的动作是在类型转换,即如下
+      // event_.handled_ = func(*static_cast<T*>(&event_));
       return true;
     }
     return false;

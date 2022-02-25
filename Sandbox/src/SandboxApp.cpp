@@ -11,7 +11,10 @@ class ExampleLayer : public hammer::Layer {
 
 class Sandbox : public hammer::Application {
  public:
-  Sandbox() { PushLayer(new ExampleLayer()); }
+  Sandbox() { 
+    PushLayer(new ExampleLayer());
+    PushOverlay(new hammer::ImGuiLayer());
+  }
   ~Sandbox(){};
 };
 
