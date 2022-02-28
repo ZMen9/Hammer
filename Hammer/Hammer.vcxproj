@@ -158,11 +158,15 @@
     <ClInclude Include="src\Hammer\Events\KeyEvent.h" />
     <ClInclude Include="src\Hammer\Events\MouseEvent.h" />
     <ClInclude Include="src\Hammer\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Hammer\Input.h" />
+    <ClInclude Include="src\Hammer\KeyCode.h" />
     <ClInclude Include="src\Hammer\Layer.h" />
     <ClInclude Include="src\Hammer\LayerStack.h" />
     <ClInclude Include="src\Hammer\Log.h" />
+    <ClInclude Include="src\Hammer\MouseCode.h" />
     <ClInclude Include="src\PlatForm\OpenGL\ImGuiOpenGLRenderer.h" />
     <ClInclude Include="src\PlatForm\OpenGL\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="src\PlatForm\Windows\WindowsInput.h" />
     <ClInclude Include="src\PlatForm\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\hmpch.h" />
@@ -174,6 +178,7 @@
     <ClCompile Include="src\Hammer\LayerStack.cpp" />
     <ClCompile Include="src\Hammer\Log.cpp" />
     <ClCompile Include="src\PlatForm\OpenGL\ImGuiOpenGLRenderer.cpp" />
+    <ClCompile Include="src\PlatForm\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\PlatForm\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\hmpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

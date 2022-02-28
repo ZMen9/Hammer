@@ -5,6 +5,11 @@
 #include "Hammer/Application.h"
 #include "Hammer/Layer.h"
 #include "Hammer/Log.h"
+
+#include "Hammer/Input.h"
+#include "Hammer/KeyCode.h"
+#include "Hammer/MouseCode.h"
+
 #include "Hammer/ImGui/ImGuiLayer.h"
 
 // include Entry Point

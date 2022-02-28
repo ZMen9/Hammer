@@ -9,6 +9,7 @@ class WindowsWindow : public Window {
   WindowsWindow(const WindowProps& props); 
   virtual ~WindowsWindow();
 
+
   void OnUpdate() override;
   inline unsigned int width() const override { return data_.width_; }
   inline unsigned int height() const override { return data_.height_; }
@@ -18,6 +19,8 @@ class WindowsWindow : public Window {
   };
   void SetVSync(bool enabled) override;
   bool IsVSync() const override;
+  
+  inline virtual void* GetNativeWindow() const override { return window_; }
  private:
   virtual void Init(const WindowProps& props);
   virtual void Shutdown();

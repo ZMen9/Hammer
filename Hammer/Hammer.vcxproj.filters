@@ -66,6 +66,10 @@
     </ClInclude>
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\hmpch.h" />
+    <ClInclude Include="src\Hammer\Input.h" />
+    <ClInclude Include="src\PlatForm\Windows\WindowsInput.h" />
+    <ClInclude Include="src\Hammer\KeyCode.h" />
+    <ClInclude Include="src\Hammer\MouseCode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Hammer\Application.cpp">
@@ -90,5 +94,6 @@
       <Filter>PlatForm\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\hmpch.cpp" />
+    <ClCompile Include="src\PlatForm\Windows\WindowsInput.cpp" />
   </ItemGroup>
 </Project>
