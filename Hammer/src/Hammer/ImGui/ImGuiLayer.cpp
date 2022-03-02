@@ -1,9 +1,13 @@
 #include "hmpch.h"
 #include "ImGuiLayer.h"
 
-#include "Hammer/Application.h"
-#include "PlatForm/OpenGL/ImGuiOpenGLRenderer.h"
 #include "imgui.h"
+#include "backends/imgui_impl_glfw.h"
+#include "backends/imgui_impl_opengl3.h"
+#include "backends/imgui_impl_opengl3_loader.h"
+
+#include "Hammer/Application.h"
+
 
 // TEMPORARY
 #include <GLFW/glfw3.h>
@@ -17,10 +21,19 @@ ImGuiLayer::~ImGuiLayer() {}
 
 void ImGuiLayer::OnAttach() {
   // Setup Dear ImGui context IMGUI_CHECKVERSION();
+  IMGUI_CHECKVERSION();
   ImGui::CreateContext();
   ImGuiIO& io = ImGui::GetIO();
-  io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
-  io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
+  (void)io;
+  io.ConfigFlags |=
+      ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
+  // io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad
+  // Controls
+  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;    // Enable Docking
+  io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;  // Enable Multi-Viewport
+                                                       // / Platform Windows
+  // io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
+  // io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
 
   // TEMPORARY: should eventually use Hammer key codes
   io.KeyMap[ImGuiKey_Tab] = GLFW_KEY_TAB; 
