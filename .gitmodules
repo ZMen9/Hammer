@@ -10,3 +10,6 @@
 [submodule "Hammer/vendor/imgui"]
 	path = Hammer/vendor/imgui
 	url = https://github.com/ZMen9/imgui.git
+[submodule "Hammer/vendor/glm"]
+	path = Hammer/vendor/glm
+	url = https://github.com/g-truc/glm.git
