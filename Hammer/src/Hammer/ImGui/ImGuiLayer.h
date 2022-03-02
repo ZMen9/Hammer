@@ -11,7 +11,11 @@ class HAMMER_API ImGuiLayer : public Layer {
 
   virtual void OnAttach() override;
   virtual void OnDetach() override;
-  virtual void OnUpdate() override;
+  virtual void OnImGuiRender() override;
+
+
+  void Begin();
+  void End();
 
  private:
   float time_ = 0.0f;

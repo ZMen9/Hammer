@@ -6,6 +6,8 @@
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
 
+#include "Hammer/ImGui/ImGuiLayer.h"
+
 namespace hammer {
 class HAMMER_API Application {
  public:
@@ -23,6 +25,7 @@ class HAMMER_API Application {
 
  private: 
   std::unique_ptr<Window> window_;
+  ImGuiLayer* ImGuiLayer_;
   bool running_ = true;
   LayerStack layer_stack_;
 

@@ -111,6 +111,7 @@ project "Sandbox"
 	{
 		"Hammer/vendor/spdlog/include",
 		"Hammer/src",
+		"Hammer/vendor",
 		"%{IncludeDir.glm}"
 	}
 

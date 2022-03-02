@@ -1375,4 +1375,7 @@
     </ClCompile>
     <ClCompile Include="src\Hammer\ImGui\ImGuiBuild.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="vendor\imgui\premake5.lua" />
+  </ItemGroup>
 </Project>
