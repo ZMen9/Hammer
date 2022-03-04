@@ -16,7 +16,6 @@ namespace hammer {
 
 ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") {}
 
-ImGuiLayer::~ImGuiLayer() {}
 
 void ImGuiLayer::OnAttach() {
   // Setup Dear ImGui context IMGUI_CHECKVERSION();
@@ -73,7 +72,7 @@ void ImGuiLayer::End() {
   ImGuiIO& io = ImGui::GetIO();
   Application& app = Application::instance();
   io.DisplaySize =
-      ImVec2(app.window().width(), app.window().height());
+      ImVec2((float)app.window().width(), (float)app.window().height());
   // Rendering
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

@@ -13,6 +13,9 @@
     <Filter Include="src\Hammer\ImGui">
       <UniqueIdentifier>{40C442FA-2CBD-614C-55EF-46D141474158}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Hammer\Renderer">
+      <UniqueIdentifier>{FC42E396-68A4-C0A4-F111-07575D72F763}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\PlatForm">
       <UniqueIdentifier>{013EF1E4-EDA0-8089-9626-B93F82684C0C}</UniqueIdentifier>
     </Filter>
@@ -90,14 +93,32 @@
     <ClInclude Include="src\Hammer\MouseCode.h">
       <Filter>src\Hammer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Hammer\Renderer\Buffer.h">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Renderer\GraphicsContext.h">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Renderer\Renderer.h">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Renderer\Shader.h">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Window.h">
+      <Filter>src\Hammer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlatForm\OpenGL\OpenGLBuffer.h">
+      <Filter>src\PlatForm\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlatForm\OpenGL\OpenGLContext.h">
+      <Filter>src\PlatForm\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\PlatForm\Windows\WindowsInput.h">
       <Filter>src\PlatForm\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\PlatForm\Windows\WindowsWindow.h">
       <Filter>src\PlatForm\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Window.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\hmpch.h">
       <Filter>src</Filter>
@@ -1352,6 +1373,9 @@
     <ClCompile Include="src\Hammer\Application.cpp">
       <Filter>src\Hammer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Hammer\ImGui\ImGuiBuild.cpp">
+      <Filter>src\Hammer\ImGui</Filter>
+    </ClCompile>
     <ClCompile Include="src\Hammer\ImGui\ImGuiLayer.cpp">
       <Filter>src\Hammer\ImGui</Filter>
     </ClCompile>
@@ -1364,6 +1388,21 @@
     <ClCompile Include="src\Hammer\Log.cpp">
       <Filter>src\Hammer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Hammer\Renderer\Buffer.cpp">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\Renderer\Renderer.cpp">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\Renderer\Shader.cpp">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlatForm\OpenGL\OpenGLBuffer.cpp">
+      <Filter>src\PlatForm\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlatForm\OpenGL\OpenGLContext.cpp">
+      <Filter>src\PlatForm\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\PlatForm\Windows\WindowsInput.cpp">
       <Filter>src\PlatForm\Windows</Filter>
     </ClCompile>
@@ -1373,9 +1412,5 @@
     <ClCompile Include="src\hmpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Hammer\ImGui\ImGuiBuild.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="vendor\imgui\premake5.lua" />
   </ItemGroup>
 </Project>

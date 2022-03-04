@@ -1,10 +1,14 @@
 #pragma once
 
 #ifdef HM_PLATFORM_WINDOWS
+#if HM_DYNAMIC_LINK
 #ifdef HM_BUILD_DLL
 #define HAMMER_API __declspec(dllexport)
 #else
 #define HAMMER_API __declspec(dllimport)
+#endif
+#else
+#define HAMMER_API
 #endif
 #else
 #error HAMMER ONLY SUPPORTS WINDOWS!

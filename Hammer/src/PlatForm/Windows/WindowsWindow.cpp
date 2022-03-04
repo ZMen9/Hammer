@@ -1,11 +1,11 @@
 #include "hmpch.h"
 #include "WindowsWindow.h"
 
-#include <glad/glad.h>
 
 #include "Hammer/Events/ApplicationEvent.h"
 #include "Hammer/Events/KeyEvent.h"
 #include "Hammer/Events/MouseEvent.h"
+#include "PlatForm/OpenGL/OpenGLContext.h"
 
 namespace hammer {
 
@@ -22,21 +22,6 @@ Window* Window::Create(const WindowProps& props) {
 WindowsWindow::WindowsWindow(const WindowProps& props) { Init(props); }
 
 WindowsWindow::~WindowsWindow() { Shutdown(); }
-
-void WindowsWindow::OnUpdate() {
-  glfwPollEvents();
-  glfwSwapBuffers(window_);
-}
-
-void WindowsWindow::SetVSync(bool enabled) {
-  if (enabled)
-    glfwSwapInterval(1);
-  else
-    glfwSwapInterval(0);
-  data_.VSync_ = enabled;
-}
-
-bool WindowsWindow::IsVSync() const { return data_.VSync_; }
 
 void WindowsWindow::Init(const WindowProps& props) {
   data_.title_ = props.title_;
@@ -56,9 +41,10 @@ void WindowsWindow::Init(const WindowProps& props) {
 
   window_ = glfwCreateWindow((int)props.width_, (int)props.height_,
                              data_.title_.c_str(), nullptr, nullptr);
-  glfwMakeContextCurrent(window_);
-  int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-  HM_CORE_ASSERT(status, "Failed to initialize Glad!");
+  
+  context_ = new OpenGLContext(window_);
+  context_->Init();
+
   glfwSetWindowUserPointer(window_, &data_);
   SetVSync(true);
 
@@ -146,6 +132,22 @@ void WindowsWindow::Init(const WindowProps& props) {
     data.EventCallback(event);
   });
 }
+
+void WindowsWindow::OnUpdate() {
+  glfwPollEvents();
+  context_->SwapBuffers();
+}
+
+void WindowsWindow::SetVSync(bool enabled) {
+  if (enabled)
+    glfwSwapInterval(1);
+  else
+    glfwSwapInterval(0);
+  data_.VSync_ = enabled;
+}
+
+bool WindowsWindow::IsVSync() const { return data_.VSync_; }
+
 
 void WindowsWindow::Shutdown() { glfwDestroyWindow(window_); }
 

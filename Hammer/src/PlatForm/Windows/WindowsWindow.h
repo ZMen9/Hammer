@@ -1,7 +1,8 @@
 #pragma once
 
-#include "GLFW/glfw3.h"
-#include "Window.h"
+#include "Hammer/Window.h"
+#include "Hammer/Renderer/GraphicsContext.h"
+#include <GLFW/glfw3.h>
 
 namespace hammer {
 class WindowsWindow : public Window {
@@ -25,7 +26,9 @@ class WindowsWindow : public Window {
   virtual void Init(const WindowProps& props);
   virtual void Shutdown();
 
+ private:
   GLFWwindow* window_;
+  GraphicsContext* context_;
 
   struct WindowData {
     std::string title_;

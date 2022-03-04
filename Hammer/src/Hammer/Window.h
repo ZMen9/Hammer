@@ -19,7 +19,7 @@ class HAMMER_API Window {
  public:
   using EventCallbackFn = std::function<void(Event&)>;
 
-  virtual ~Window() {};
+  virtual ~Window() = default;
   virtual void OnUpdate() = 0;
   virtual unsigned int width() const = 0;
   virtual unsigned int height() const = 0;

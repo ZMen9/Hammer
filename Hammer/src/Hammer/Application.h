@@ -7,12 +7,15 @@
 #include "Events/ApplicationEvent.h"
 
 #include "Hammer/ImGui/ImGuiLayer.h"
+#include "Hammer/Renderer/Shader.h"
+
+#include "Hammer/Renderer/Buffer.h"
 
 namespace hammer {
 class HAMMER_API Application {
  public:
   Application();
-  virtual ~Application();
+  virtual ~Application() = default;
   void Run();
   void OnEvent(Event& e);
   bool OnWindowClose(WindowCloseEvent& e);
@@ -29,10 +32,16 @@ class HAMMER_API Application {
   bool running_ = true;
   LayerStack layer_stack_;
 
+  unsigned int vertex_array_;
+  std::unique_ptr<Shader> shader_;
+  std::unique_ptr<VertexBuffer> vertex_buffer_; 
+  std::unique_ptr<IndexBuffer> index_buffer_;
+
+ private:
   static Application* instance_;
 };
 
-// Should be defind by client application
+// Should be defined by client application
 Application* CreateApplication();
 
 }  // namespace Hammer
