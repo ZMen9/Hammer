@@ -8,8 +8,8 @@
 
 #include "Hammer/ImGui/ImGuiLayer.h"
 #include "Hammer/Renderer/Shader.h"
-
 #include "Hammer/Renderer/Buffer.h"
+#include "Hammer/Renderer/VertexArray.h"
 
 namespace hammer {
 class HAMMER_API Application {
@@ -32,10 +32,10 @@ class HAMMER_API Application {
   bool running_ = true;
   LayerStack layer_stack_;
 
-  unsigned int vertex_array_;
-  std::unique_ptr<Shader> shader_;
-  std::unique_ptr<VertexBuffer> vertex_buffer_; 
-  std::unique_ptr<IndexBuffer> index_buffer_;
+  std::shared_ptr<Shader> shader_;
+  std::shared_ptr<VertexArray> vertex_array_;
+  std::shared_ptr<Shader> blue_shader_;
+  std::shared_ptr<VertexArray> square_va_;
 
  private:
   static Application* instance_;

@@ -1,16 +1,16 @@
 #pragma once
+#include "RenderCommand.h"
 
 namespace hammer {
-enum class RenderAPI { 
-	None = 0,
-	OpenGL = 1
-};
 
 class Renderer {
  public:
-  inline static RenderAPI GetAPI() { return render_api_; }
- private: 
-	static RenderAPI render_api_;
+  static void BeginScene();
+  static void EndScene();
+  static void Submit(const std::shared_ptr<VertexArray>& vertex_array);
+
+ public:
+  inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 };
 
 }  // namespace hammer

@@ -105,6 +105,7 @@ class BufferLayout {
   }
 
   inline uint32_t stride() const { return stride_; }
+  inline const std::vector<BufferElement>& elements() const { return elements_; }
 
   std::vector<BufferElement>::iterator begin() { return elements_.begin(); }
   std::vector<BufferElement>::iterator end() { return elements_.end(); }

@@ -27,11 +27,12 @@ class HAMMER_API Log {
 #define HM_CORE_INFO(...)   ::hammer::Log::core_logger()->info(__VA_ARGS__)
 #define HM_CORE_WARN(...)   ::hammer::Log::core_logger()->warn(__VA_ARGS__)
 #define HM_CORE_ERROR(...)  ::hammer::Log::core_logger()->error(__VA_ARGS__)
-#define HM_CORE_FATAL(...)  ::hammer::Log::core_logger()->critical(__VA_ARGS__)
+#define HM_CORE_CRITICAL(...) \
+  ::hammer::Log::core_logger()->critical(__VA_ARGS__)
 
 // Client log macros          
 #define HM_TRACE(...)       ::hammer::Log::client_logger()->trace(__VA_ARGS__)
 #define HM_INFO(...)        ::hammer::Log::client_logger()->info(__VA_ARGS__)
 #define HM_WARN(...)        ::hammer::Log::client_logger()->warn(__VA_ARGS__)
 #define HM_ERROR(...)       ::hammer::Log::client_logger()->error(__VA_ARGS__)
-#define HM_FATAL(...)       ::hammer::Log::client_logger()->critical(__VA_ARGS__)
+#define HM_CRITICAL(...)       ::hammer::Log::client_logger()->critical(__VA_ARGS__)
