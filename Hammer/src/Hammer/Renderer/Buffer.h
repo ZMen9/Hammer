@@ -1,5 +1,5 @@
 #pragma once
-#include <stdint.h>
+
 namespace hammer {
 
 enum class ShaderDataType {
