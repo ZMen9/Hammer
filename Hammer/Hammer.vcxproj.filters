@@ -99,10 +99,19 @@
     <ClInclude Include="src\Hammer\Renderer\GraphicsContext.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Hammer\Renderer\RenderCommand.h">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\Renderer.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Hammer\Renderer\RendererAPI.h">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\Shader.h">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Renderer\VertexArray.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\Window.h">
@@ -112,6 +121,12 @@
       <Filter>src\PlatForm\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLContext.h">
+      <Filter>src\PlatForm\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlatForm\OpenGL\OpenGLRendererAPI.h">
+      <Filter>src\PlatForm\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlatForm\OpenGL\OpenGLVertexArray.h">
       <Filter>src\PlatForm\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\PlatForm\Windows\WindowsInput.h">
@@ -1368,11 +1383,7 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Hammer\Renderer\VertexArray.h" />
-    <ClInclude Include="src\PlatForm\OpenGL\OpenGLVertexArray.h" />
-    <ClInclude Include="src\Hammer\Renderer\RendererAPI.h" />
-    <ClInclude Include="src\Hammer\Renderer\RenderCommand.h" />
-    <ClInclude Include="src\PlatForm\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Hammer\Renderer\OrthographicCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Hammer\Application.cpp">
@@ -1396,16 +1407,31 @@
     <ClCompile Include="src\Hammer\Renderer\Buffer.cpp">
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Hammer\Renderer\RenderCommand.cpp">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\Renderer.cpp">
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Hammer\Renderer\RendererAPI.cpp">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\Shader.cpp">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\Renderer\VertexArray.cpp">
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\PlatForm\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLContext.cpp">
+      <Filter>src\PlatForm\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlatForm\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>src\PlatForm\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlatForm\OpenGL\OpenGLVertexArray.cpp">
       <Filter>src\PlatForm\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\PlatForm\Windows\WindowsInput.cpp">
@@ -1417,10 +1443,6 @@
     <ClCompile Include="src\hmpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\PlatForm\OpenGL\OpenGLVertexArray.cpp" />
-    <ClCompile Include="src\Hammer\Renderer\VertexArray.cpp" />
-    <ClCompile Include="src\Hammer\Renderer\RendererAPI.cpp" />
-    <ClCompile Include="src\Hammer\Renderer\RenderCommand.cpp" />
-    <ClCompile Include="src\PlatForm\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Hammer\Renderer\OrthographicCamera.cpp" />
   </ItemGroup>
 </Project>

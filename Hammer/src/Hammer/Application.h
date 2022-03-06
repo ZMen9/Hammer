@@ -11,6 +11,8 @@
 #include "Hammer/Renderer/Buffer.h"
 #include "Hammer/Renderer/VertexArray.h"
 
+#include "Hammer/Renderer/OrthographicCamera.h"
+
 namespace hammer {
 class HAMMER_API Application {
  public:
@@ -36,6 +38,8 @@ class HAMMER_API Application {
   std::shared_ptr<VertexArray> vertex_array_;
   std::shared_ptr<Shader> blue_shader_;
   std::shared_ptr<VertexArray> square_va_;
+
+  OrthographicCamera camera_;
 
  private:
   static Application* instance_;

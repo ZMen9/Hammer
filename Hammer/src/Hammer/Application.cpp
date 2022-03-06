@@ -8,7 +8,7 @@ namespace hammer {
 
 Application* Application::instance_ = nullptr;
 
-Application::Application() {
+Application::Application() : camera_(-1.6f, 1.6f, -0.9f, 0.9f) {
   HM_CORE_ASSERT(!instance_, "Application already exists!");
   instance_ = this;
   window_ = std::unique_ptr<Window>(Window::Create());
@@ -60,6 +60,8 @@ Application::Application() {
 			#version 450 core
 			layout(location = 0) in vec3 a_position;
       layout(location = 1) in vec4 a_color;
+
+      uniform mat4 u_ViewProjection;
       
 			out vec3 v_position;
       out vec4 v_color;
@@ -68,7 +70,7 @@ Application::Application() {
 			{
 				v_position = a_position;
         v_color = a_color;
-				gl_Position = vec4(a_position, 1.0);	
+				gl_Position = u_ViewProjection * vec4(a_position, 1.0);	
 			}
 		)";
 
@@ -92,10 +94,11 @@ Application::Application() {
 			
 			layout(location = 0) in vec3 a_Position;
 			out vec3 v_Position;
+      uniform mat4 u_ViewProjection;
 			void main()
 			{
 				v_Position = a_Position;
-				gl_Position = vec4(a_Position, 1.0);	
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);	
 			}
 		)";
 
@@ -128,15 +131,16 @@ void Application::Run() {
   while (running_) {
     RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
     RenderCommand::Clear();
-    
-    Renderer::BeginScene();
-    blue_shader_->Bind();
-    Renderer::Submit(square_va_);
-    Renderer::EndScene();
 
-    Renderer::BeginScene();
-    shader_->Bind();
-    Renderer::Submit(vertex_array_);
+    camera_.set_position({0.0f, 0.0f, 0.0f});
+    camera_.set_degrees(0.0f);
+
+
+    Renderer::BeginScene(camera_);
+    
+    Renderer::Submit(blue_shader_ ,square_va_);
+    Renderer::Submit(shader_, vertex_array_);
+
     Renderer::EndScene();
     
     for (Layer* layer : layer_stack_) {
