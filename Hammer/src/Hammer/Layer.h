@@ -2,7 +2,7 @@
 
 #include "Hammer/Core.h"
 #include "Hammer/Events/Event.h"
-
+#include "Hammer/Core/Timestep.h"
 namespace hammer {
 class HAMMER_API Layer {
  public:
@@ -11,7 +11,7 @@ class HAMMER_API Layer {
 
   virtual void OnAttach() {}
   virtual void OnDetach() {}
-  virtual void OnUpdate() {}
+  virtual void OnUpdate(Timestep ts) {}
   virtual void OnImGuiRender() {}
   virtual void OnEvent(Event& event) {}
 

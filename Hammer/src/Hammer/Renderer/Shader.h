@@ -4,14 +4,12 @@
 namespace hammer {
 class Shader {
  public:
-  Shader(const std::string& vertex_src, const std::string& fragment_src);
-  ~Shader();
+  Shader() = default;
+  virtual ~Shader() = default;
 
-  void Bind() const;
-  void Unbind() const;
-
-  void UploadUniformMat4(const std::string& name, const glm::mat4 matrix);
- private:
-  uint32_t render_id_ ;
+  virtual void Bind() const = 0;
+  virtual void Unbind() const = 0;
+  static Shader* Create(const std::string& vertex_src,
+                        const std::string& fragment_src);
 };
 } // namespace hammer

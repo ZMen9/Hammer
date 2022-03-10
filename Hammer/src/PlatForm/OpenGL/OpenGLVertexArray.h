@@ -10,21 +10,22 @@ class OpenGLVertexArray : public VertexArray {
   virtual void Bind() const override;
   virtual void Unbind() const override;
   virtual void AddVertexBuffer(
-      const std::shared_ptr<VertexBuffer>& vertex_buffer) override;
+      const Ref<VertexBuffer>& vertex_buffer) override;
   virtual void SetIndexBuffer(
-      const std::shared_ptr<IndexBuffer>& index_buffer) override;
+      const Ref<IndexBuffer>& index_buffer) override;
 
-  inline virtual const std::vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffers()
+  inline virtual const std::vector<Ref<VertexBuffer>>& GetVertexBuffers()
       const override {
     return vertex_buffers_;
   }
-  inline virtual const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const override {
+  inline virtual const Ref<IndexBuffer>& GetIndexBuffer() const override {
     return index_buffer_;
   }
 
  private:
   uint32_t render_id_;
-  std::vector<std::shared_ptr<VertexBuffer>> vertex_buffers_;
-  std::shared_ptr<IndexBuffer> index_buffer_;
+  uint32_t vertex_buffer_index_ = 0;
+  std::vector<Ref<VertexBuffer>> vertex_buffers_;
+  Ref<IndexBuffer> index_buffer_;
 };
 } // namespace hammer

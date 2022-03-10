@@ -10,9 +10,10 @@ class RendererAPI {
   };
 
  public:
+  virtual void Init() = 0;
   virtual void SetClearColor(const glm::vec4& color) = 0;
   virtual void Clear() = 0;
-  virtual void DrawIndexed(const std::shared_ptr<VertexArray>& vetex_array) = 0;
+  virtual void DrawIndexed(const Ref<VertexArray>& vetex_array) = 0;
 
   inline static API GetAPI() { return kAPI; };
 

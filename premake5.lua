@@ -16,6 +16,7 @@ IncludeDir["GLFW"] = "Hammer/vendor/GLFW/include"
 IncludeDir["Glad"] = "Hammer/vendor/Glad/include"
 IncludeDir["ImGui"] = "Hammer/vendor/imgui/"
 IncludeDir["glm"] = "Hammer/vendor/glm"
+IncludeDir["stb_image"] = "Hammer/vendor/stb_image"
 
 include "Hammer/vendor/GLFW"
 include "Hammer/vendor/Glad"
@@ -39,7 +40,9 @@ project "Hammer"
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
-		"%{prj.name}/vendor/glm/glm/**.inl"
+		"%{prj.name}/vendor/glm/glm/**.inl",
+		"%{prj.name}/vendor/stb_image/**.h",
+		"%{prj.name}/vendor/stb_image/**.cpp"
 	}
 
 	defines
@@ -56,6 +59,7 @@ project "Hammer"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb_image}"
 	}
 
 	links

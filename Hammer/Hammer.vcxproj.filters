@@ -7,6 +7,9 @@
     <Filter Include="src\Hammer">
       <UniqueIdentifier>{96364A14-82EE-8B61-EBF5-64BDD7CC2652}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Hammer\Core">
+      <UniqueIdentifier>{AEE87AAA-1A74-E86E-2385-6B638F8F446F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Hammer\Events">
       <UniqueIdentifier>{BADDF939-26F4-F7CF-6F6B-83F1DBC0C857}</UniqueIdentifier>
     </Filter>
@@ -46,6 +49,9 @@
     <Filter Include="vendor\glm\glm\gtx">
       <UniqueIdentifier>{B3A6A76B-9F8A-68C1-08EB-6214F4ED5243}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vendor\stb_image">
+      <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Hammer.h">
@@ -56,6 +62,9 @@
     </ClInclude>
     <ClInclude Include="src\Hammer\Core.h">
       <Filter>src\Hammer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Core\Timestep.h">
+      <Filter>src\Hammer\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\EntryPoint.h">
       <Filter>src\Hammer</Filter>
@@ -99,6 +108,9 @@
     <ClInclude Include="src\Hammer\Renderer\GraphicsContext.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Hammer\Renderer\OrthographicCamera.h">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\RenderCommand.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
@@ -109,6 +121,9 @@
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\Shader.h">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Renderer\Texture.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\VertexArray.h">
@@ -124,6 +139,12 @@
       <Filter>src\PlatForm\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLRendererAPI.h">
+      <Filter>src\PlatForm\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlatForm\OpenGL\OpenGLShader.h">
+      <Filter>src\PlatForm\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlatForm\OpenGL\OpenGLTexture.h">
       <Filter>src\PlatForm\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLVertexArray.h">
@@ -1383,7 +1404,9 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Hammer\Renderer\OrthographicCamera.h" />
+    <ClInclude Include="vendor\stb_image\stb_image.h">
+      <Filter>vendor\stb_image</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Hammer\Application.cpp">
@@ -1407,6 +1430,9 @@
     <ClCompile Include="src\Hammer\Renderer\Buffer.cpp">
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Hammer\Renderer\OrthographicCamera.cpp">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\RenderCommand.cpp">
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
@@ -1417,6 +1443,9 @@
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\Shader.cpp">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\Renderer\Texture.cpp">
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\VertexArray.cpp">
@@ -1431,6 +1460,12 @@
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLRendererAPI.cpp">
       <Filter>src\PlatForm\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\PlatForm\OpenGL\OpenGLShader.cpp">
+      <Filter>src\PlatForm\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlatForm\OpenGL\OpenGLTexture.cpp">
+      <Filter>src\PlatForm\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLVertexArray.cpp">
       <Filter>src\PlatForm\OpenGL</Filter>
     </ClCompile>
@@ -1443,6 +1478,8 @@
     <ClCompile Include="src\hmpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Hammer\Renderer\OrthographicCamera.cpp" />
+    <ClCompile Include="vendor\stb_image\stb_image.cpp">
+      <Filter>vendor\stb_image</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
