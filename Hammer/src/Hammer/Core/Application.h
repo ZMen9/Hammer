@@ -1,8 +1,8 @@
 #pragma once
-#include "Core.h"
+#include "Hammer/Core/Core.h"
 
-#include "Window.h"
-#include "Hammer/LayerStack.h"
+#include "Hammer/Core/Window.h"
+#include "Hammer/Core/LayerStack.h"
 #include "Hammer/Events/Event.h"
 #include "Hammer/Events/ApplicationEvent.h"
 

@@ -5,7 +5,7 @@
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
 
-#include "Hammer/Application.h"
+#include "Hammer/Core/Application.h"
 
 
 // TEMPORARY

@@ -7,7 +7,11 @@ namespace hammer {
 LayerStack::LayerStack() {}
 
 LayerStack::~LayerStack() {
-  for (Layer* layer : layers_) delete layer;
+  for (Layer* layer : layers_) {
+    layer->OnDetach();
+    delete layer;
+  }
+
 }
 
 void LayerStack::PushLayer(Layer* layer) {

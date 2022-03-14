@@ -57,17 +57,38 @@
     <ClInclude Include="src\Hammer.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Hammer\Application.h">
-      <Filter>src\Hammer</Filter>
+    <ClInclude Include="src\Hammer\Core\Application.h">
+      <Filter>src\Hammer\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Hammer\Core.h">
-      <Filter>src\Hammer</Filter>
+    <ClInclude Include="src\Hammer\Core\Core.h">
+      <Filter>src\Hammer\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Core\EntryPoint.h">
+      <Filter>src\Hammer\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Core\Input.h">
+      <Filter>src\Hammer\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Core\KeyCode.h">
+      <Filter>src\Hammer\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Core\Layer.h">
+      <Filter>src\Hammer\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Core\LayerStack.h">
+      <Filter>src\Hammer\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Core\Log.h">
+      <Filter>src\Hammer\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Core\MouseCode.h">
+      <Filter>src\Hammer\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\Core\Timestep.h">
       <Filter>src\Hammer\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Hammer\EntryPoint.h">
-      <Filter>src\Hammer</Filter>
+    <ClInclude Include="src\Hammer\Core\Window.h">
+      <Filter>src\Hammer\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\Events\ApplicationEvent.h">
       <Filter>src\Hammer\Events</Filter>
@@ -84,24 +105,6 @@
     <ClInclude Include="src\Hammer\ImGui\ImGuiLayer.h">
       <Filter>src\Hammer\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Hammer\Input.h">
-      <Filter>src\Hammer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Hammer\KeyCode.h">
-      <Filter>src\Hammer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Hammer\Layer.h">
-      <Filter>src\Hammer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Hammer\LayerStack.h">
-      <Filter>src\Hammer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Hammer\Log.h">
-      <Filter>src\Hammer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Hammer\MouseCode.h">
-      <Filter>src\Hammer</Filter>
-    </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\Buffer.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
@@ -109,6 +112,9 @@
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\OrthographicCamera.h">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Renderer\OrthographicCameraController.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\RenderCommand.h">
@@ -128,9 +134,6 @@
     </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\VertexArray.h">
       <Filter>src\Hammer\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Hammer\Window.h">
-      <Filter>src\Hammer</Filter>
     </ClInclude>
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLBuffer.h">
       <Filter>src\PlatForm\OpenGL</Filter>
@@ -1409,8 +1412,17 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Hammer\Application.cpp">
-      <Filter>src\Hammer</Filter>
+    <ClCompile Include="src\Hammer\Core\Application.cpp">
+      <Filter>src\Hammer\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\Core\Layer.cpp">
+      <Filter>src\Hammer\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\Core\LayerStack.cpp">
+      <Filter>src\Hammer\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\Core\Log.cpp">
+      <Filter>src\Hammer\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Hammer\ImGui\ImGuiBuild.cpp">
       <Filter>src\Hammer\ImGui</Filter>
@@ -1418,19 +1430,13 @@
     <ClCompile Include="src\Hammer\ImGui\ImGuiLayer.cpp">
       <Filter>src\Hammer\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Hammer\Layer.cpp">
-      <Filter>src\Hammer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Hammer\LayerStack.cpp">
-      <Filter>src\Hammer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Hammer\Log.cpp">
-      <Filter>src\Hammer</Filter>
-    </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\Buffer.cpp">
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\OrthographicCamera.cpp">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\Renderer\OrthographicCameraController.cpp">
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\RenderCommand.cpp">

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hammer/Core.h"
+#include "Hammer/Core/Core.h"
 #include "Hammer/Events/Event.h"
 
 namespace hammer {
@@ -10,7 +10,7 @@ struct WindowProps {
   unsigned int height_;
 
   WindowProps(const std::string& title = "Hammer Engine",
-              unsigned int width = 1280, unsigned int height = 720)
+              unsigned int width = 1920, unsigned int height = 1080)
       : title_(title), width_(width), height_(height) {}
 };
 

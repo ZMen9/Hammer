@@ -1,5 +1,5 @@
 #pragma once
-#include "Hammer/Core.h"
+#include "Hammer/Core/Core.h"
 #include "hmpch.h"
 
 namespace hammer {
@@ -38,7 +38,7 @@ enum EventCategory {
 };
 
 #define EVENT_CLASS_TYPE(type)                                                \
-  static EventType GetStaticType() { return EventType::##type; }              \
+  static EventType GetStaticType() { return EventType::type; }              \
   virtual EventType GetEventType() const override { return GetStaticType(); } \
   virtual const char* GetName() const override { return #type; }
 
@@ -70,21 +70,32 @@ class HAMMER_API Event {
 };
 
 class EventDispatcher {
-  template <typename T>
-  using EventFn = std::function<bool(T&)>;
+  //template <typename T>
+  //using EventFn = std::function<bool(T&)>;
 
  public:
   EventDispatcher(Event& event) : event_(event) {}
 
-  template <typename T>
-  bool Dispatch(EventFn<T> func) {
+  //template <typename T, typename F>
+  //bool Dispatch(EventFn<T> func) {
+  //  if (event_.GetEventType() == T::GetStaticType()) {
+  //    //event_.handled_ = func(*(T*)&event_);// 多余的动作是在类型转换,即如下
+  //    // event_.handled_ = func(*static_cast<T*>(&event_));
+  //    return true;
+  //  }
+  //  return false;
+  //}
+  // 
+  // avoid using std::function for performance:
+  template<typename T, typename F>
+  bool Dispatch(const F& func) {
     if (event_.GetEventType() == T::GetStaticType()) {
-      event_.handled_ = func(*(T*)&event_);// 多余的动作是在类型转换,即如下
-      // event_.handled_ = func(*static_cast<T*>(&event_));
+      event_.handled_ = func(static_cast<T&>(event_));
       return true;
     }
     return false;
   }
+
 
  private:
   Event& event_;

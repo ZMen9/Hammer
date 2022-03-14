@@ -12,6 +12,7 @@ class OrthographicCamera {
     position_ = position;
     ReCalculateViewMatrix();
   }
+  void set_projection(float left, float right, float bottom, float top);
 
   inline float degrees() const { return degrees_; }
   void set_degrees(float degrees) {
@@ -24,6 +25,7 @@ class OrthographicCamera {
   const glm::mat4& view_projection_matrix() const {
     return view_projection_matrix_;
   }
+
 
 
  private:

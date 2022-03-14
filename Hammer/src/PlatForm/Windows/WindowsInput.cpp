@@ -3,7 +3,7 @@
 
 #include <GLFW/glfw3.h>
 
-#include "Hammer/Application.h"
+#include "Hammer/Core/Application.h"
 
 namespace hammer {
 Input* Input::kInstance = new WindowsInput();

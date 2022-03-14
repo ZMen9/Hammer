@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "Hammer/Core.h"
+#include "Hammer/Core/Core.h"
 #include "Layer.h"
 
 namespace hammer {

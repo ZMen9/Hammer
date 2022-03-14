@@ -1,5 +1,5 @@
 #pragma once
-#include "Hammer/Layer.h"
+#include "Hammer/Core/Layer.h"
 #include "Hammer/Events/ApplicationEvent.h"
 #include "Hammer/Events/KeyEvent.h"
 #include "Hammer/Events/MouseEvent.h"

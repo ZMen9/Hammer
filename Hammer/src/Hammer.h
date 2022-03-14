@@ -1,16 +1,16 @@
 #pragma once
 
 // For used by Hammer application
-
-#include "Hammer/Application.h"
-#include "Hammer/Layer.h"
-#include "Hammer/Log.h"
+#include "Hammer/Core/Application.h"
+#include "Hammer/Core/Layer.h"
+#include "Hammer/Core/Log.h"
 #include "Hammer/Core/Timestep.h"
+#include "Hammer/Renderer/OrthographicCameraController.h"
 
 //----Input System--------------------
-#include "Hammer/Input.h"
-#include "Hammer/KeyCode.h"
-#include "Hammer/MouseCode.h"
+#include "Hammer/Core/Input.h"
+#include "Hammer/Core/KeyCode.h"
+#include "Hammer/Core/MouseCode.h"
 //------------------------------------
 
 //----GUI-----------------------------
@@ -31,5 +31,5 @@
 
 
 //----Entry Point---------------------
-#include "Hammer/EntryPoint.h"
+#include "Hammer/Core/EntryPoint.h"
 //------------------------------------

@@ -80,7 +80,9 @@
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -104,6 +106,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -128,6 +131,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -141,31 +145,32 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Hammer.h" />
-    <ClInclude Include="src\Hammer\Application.h" />
-    <ClInclude Include="src\Hammer\Core.h" />
+    <ClInclude Include="src\Hammer\Core\Application.h" />
+    <ClInclude Include="src\Hammer\Core\Core.h" />
+    <ClInclude Include="src\Hammer\Core\EntryPoint.h" />
+    <ClInclude Include="src\Hammer\Core\Input.h" />
+    <ClInclude Include="src\Hammer\Core\KeyCode.h" />
+    <ClInclude Include="src\Hammer\Core\Layer.h" />
+    <ClInclude Include="src\Hammer\Core\LayerStack.h" />
+    <ClInclude Include="src\Hammer\Core\Log.h" />
+    <ClInclude Include="src\Hammer\Core\MouseCode.h" />
     <ClInclude Include="src\Hammer\Core\Timestep.h" />
-    <ClInclude Include="src\Hammer\EntryPoint.h" />
+    <ClInclude Include="src\Hammer\Core\Window.h" />
     <ClInclude Include="src\Hammer\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Hammer\Events\Event.h" />
     <ClInclude Include="src\Hammer\Events\KeyEvent.h" />
     <ClInclude Include="src\Hammer\Events\MouseEvent.h" />
     <ClInclude Include="src\Hammer\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Hammer\Input.h" />
-    <ClInclude Include="src\Hammer\KeyCode.h" />
-    <ClInclude Include="src\Hammer\Layer.h" />
-    <ClInclude Include="src\Hammer\LayerStack.h" />
-    <ClInclude Include="src\Hammer\Log.h" />
-    <ClInclude Include="src\Hammer\MouseCode.h" />
     <ClInclude Include="src\Hammer\Renderer\Buffer.h" />
     <ClInclude Include="src\Hammer\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Hammer\Renderer\OrthographicCamera.h" />
+    <ClInclude Include="src\Hammer\Renderer\OrthographicCameraController.h" />
     <ClInclude Include="src\Hammer\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Hammer\Renderer\Renderer.h" />
     <ClInclude Include="src\Hammer\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Hammer\Renderer\Shader.h" />
     <ClInclude Include="src\Hammer\Renderer\Texture.h" />
     <ClInclude Include="src\Hammer\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Hammer\Window.h" />
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLRendererAPI.h" />
@@ -593,14 +598,15 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Hammer\Application.cpp" />
+    <ClCompile Include="src\Hammer\Core\Application.cpp" />
+    <ClCompile Include="src\Hammer\Core\Layer.cpp" />
+    <ClCompile Include="src\Hammer\Core\LayerStack.cpp" />
+    <ClCompile Include="src\Hammer\Core\Log.cpp" />
     <ClCompile Include="src\Hammer\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Hammer\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\Hammer\Layer.cpp" />
-    <ClCompile Include="src\Hammer\LayerStack.cpp" />
-    <ClCompile Include="src\Hammer\Log.cpp" />
     <ClCompile Include="src\Hammer\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Hammer\Renderer\OrthographicCamera.cpp" />
+    <ClCompile Include="src\Hammer\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Hammer\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Hammer\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Hammer\Renderer\RendererAPI.cpp" />

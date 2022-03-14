@@ -6,9 +6,15 @@
 
 namespace hammer {
 OrthographicCamera::OrthographicCamera(float left, float right,
-                                               float bottom, float top)
+                                       float bottom, float top)
     : projection_matrix_(glm::ortho(left, right, bottom, top, -1.0f, 1.0f)),
       view_matrix_(1.0f) {
+  view_projection_matrix_ = projection_matrix_ * view_matrix_;
+}
+
+void OrthographicCamera::set_projection(float left, float right, float bottom,
+                                        float top) {
+  projection_matrix_ = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
   view_projection_matrix_ = projection_matrix_ * view_matrix_;
 }
 

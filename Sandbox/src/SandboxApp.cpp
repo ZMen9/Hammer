@@ -1,18 +1,20 @@
 #include <Hammer.h>
 
 #include "imgui/imgui.h"
-
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "PlatForm/OpenGL/OpenGLShader.h"
 
 class ExampleLayer : public hammer::Layer {
  public:
-  ExampleLayer() : Layer("Example"), camera_(-1.6f, 1.6f, -0.9f, 0.9f), camera_position_({0.0f}) {
+  ExampleLayer() 
+      : Layer("Example"), 
+        camera_controller_(1920.0f / 1080.0f) {
+
     float vertices[3 * 7] = {
       -0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-       0.5f,  -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-       0.0f,  0.5f,  0.0f, 0.8f, 0.8f, 0.2f, 1.0f
+       0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
+       0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
     };
 
     vertex_array_.reset(hammer::VertexArray::Create());
@@ -42,7 +44,7 @@ class ExampleLayer : public hammer::Layer {
         hammer::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 
     square_vb->SetLayout({
-      {hammer::ShaderDataType::Float3, "a_position"}, 
+      {hammer::ShaderDataType::Float3, "a_position"},
       {hammer::ShaderDataType::Float2, "a_texture_coord"}
       });
     square_va_->AddVertexBuffer(square_vb);
@@ -53,136 +55,161 @@ class ExampleLayer : public hammer::Layer {
     square_va_->SetIndexBuffer(square_ib);
 
     std::string vertex_src = R"(
-			#version 450 core
-			layout(location = 0) in vec3 a_position;
+                        #version 330 core
+                        layout(location = 0) in vec3 a_position;
       layout(location = 1) in vec4 a_color;
 
       uniform mat4 u_ViewProjection;
       uniform mat4 u_Transform;
-      
-			out vec3 v_position;
+
+                        out vec3 v_position;
       out vec4 v_color;
-      
-			void main()
-			{
-				v_position = a_position;
+
+                        void main()
+                        {
+                                v_position = a_position;
         v_color = a_color;
-				gl_Position = u_ViewProjection * u_Transform * vec4(a_position, 1.0);	
-			}
-		)";
+                                gl_Position = u_ViewProjection * u_Transform *
+    vec4(a_position, 1.0);
+                        }
+                )";
 
     std::string fragment_src = R"(
-			#version 450 core
-			layout(location = 0) out vec4 color;
-			in vec3 v_position;
+                        #version 330 core
+                        layout(location = 0) out vec4 color;
+                        in vec3 v_position;
       in vec4 v_color;
-      
-			void main()
-			{
+
+                        void main()
+                        {
         color = v_color;
-        
-			}
-		)";
-    shader_.reset(hammer::Shader::Create(vertex_src, fragment_src));
+
+                        }
+                )";
+    shader_ = hammer::Shader::Create("vextex_pos_color", vertex_src,
+    fragment_src);
 
     std::string flatColorShaderVertexSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) in vec3 a_Position;
-			out vec3 v_Position;
-      uniform mat4 u_ViewProjection;
-      uniform mat4 u_Transform;
-			void main()
-			{
-				v_Position = a_Position;
-				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);	
-			}
-		)";
+    #version 330 core
+
+    layout(location = 0) in vec3 a_Position;
+    out vec3 v_Position;
+    uniform mat4 u_ViewProjection;
+    uniform mat4 u_Transform;
+    void main()
+    {
+      v_Position = a_Position;
+      gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
+    })";
 
     std::string flatColorShaderFragmentSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) out vec4 color;
-			in vec3 v_Position;
+                        #version 330 core
+
+                        layout(location = 0) out vec4 color;
+                        in vec3 v_Position;
       uniform vec3 u_Color;
-			void main()
-			{
-				color = vec4(u_Color, 1.0);
-			}
-		)";
+      void main()
+                        {
+                                color = vec4(u_Color, 1.0);
+      }
+                )";
 
-    flat_color_shader_.reset(hammer::Shader::Create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
+    flat_color_shader_ = hammer::Shader::Create("flat_color",
+    flatColorShaderVertexSrc, flatColorShaderFragmentSrc);
+    
 
-    std::string textureShaderVertexSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) in vec3 a_Position;
-      layout(location = 1) in vec2 a_TextCoord;
-			out vec3 v_Position;
-      uniform mat4 u_ViewProjection;
-      uniform mat4 u_Transform;
-      out vec2 v_textcoord;
-
-			void main()
-			{
-				v_textcoord = a_TextCoord;
-				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);	
-			}
-		)";
-
-    std::string textureShaderFragmentSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) out vec4 color;
-
-      in vec2 v_textcoord;
-      uniform sampler2D u_Texture;
-			void main()
-			{
-				color = texture(u_Texture ,v_textcoord);
-			}
-		)";
-
-    texture_shader_.reset(hammer::Shader::Create(textureShaderVertexSrc,
-                                                    textureShaderFragmentSrc));
+    auto texture_shader = shader_library_.Load("assets/shaders/Texture.glsl");
 
     texture_ = hammer::Texture2D::Create("assets/textures/Checkerboard.png");
     cherno_logo_texture_ =
         hammer::Texture2D::Create("assets/textures/ChernoLogo.png");
 
-    texture_shader_->Bind();
-    std::dynamic_pointer_cast<hammer::OpenGLShader>(texture_shader_)
+    texture_shader->Bind();
+    std::dynamic_pointer_cast<hammer::OpenGLShader>(texture_shader)
         ->UploadUniformInt("u_Texture", 0);
+
+    //// draw a sphere :
+    //std::vector<float> sphere_vertices;
+    //std::vector<unsigned int> sphere_indices;
+    //const int kYSegment = 50;
+    //const int kXSegment = 50;
+    //const float kPI = 3.1415926535f;
+
+    //for (int y = 0; y <= kYSegment; ++y) {
+    //  for (int x = 0; x <= kXSegment; ++x) {
+    //    float x_segment = (float)x / (float)kXSegment;
+    //    float y_segment = (float)y / (float)kYSegment;
+    //    float x_pos = std::cos(x_segment * 2.0f * kPI) * std::sin(y_segment *
+    //kPI); float y_pos = std::cos(y_segment * kPI); float z_pos =
+    //        std::sin(x_segment * 2.0f * kPI) * std::cos(y_segment * kPI);
+    //    sphere_vertices.push_back(x_pos);
+    //    sphere_vertices.push_back(y_pos);
+    //    sphere_vertices.push_back(z_pos);
+    //  }
+    //}
+
+    //for (int i = 0; i < kYSegment; ++i) {
+    //  for (int j = 0; j < kXSegment; ++j) {
+    //    sphere_indices.push_back(i * (kXSegment + 1) + j);
+    //    sphere_indices.push_back((i + 1) * (kXSegment + 1) + j);
+    //    sphere_indices.push_back((i + 1) * (kXSegment + 1) + j + 1);
+    //    sphere_indices.push_back(i * (kXSegment + 1) + j);
+    //    sphere_indices.push_back((i + 1) * (kXSegment + 1) + j + 1);
+    //    sphere_indices.push_back(i * (kXSegment + 1) + j + 1);
+    //  }
+    //}
+
+    //std::string sphere_vertex_src = R"(
+    //  #version 330 core
+
+    //  layout(location = 0) in vec3 a_Position;
+    //  uniform mat4 u_ViewProjection;
+    //  uniform mat4 u_Transform;
+    //  void main()
+    //  {
+    //    gl_Position = u_ViewProjection * u_Transform *vec4(a_Position, 1.0);
+    //  })";
+
+    //std::string sphere_fragment_src = R"(
+    //   #version 330 core
+    //   layout(location = 0) out vec4 color;
+    //   uniform vec3 u_Color;
+    //   void main()
+    //   {
+    //     color = vec4(u_Color, 1.0);
+    //   })";
+
+    //sphere_va_.reset(hammer::VertexArray::Create());
+    //hammer::Ref<hammer::VertexBuffer> sphere_vb(
+    //    hammer::VertexBuffer::Create(&sphere_vertices[0],
+    //(uint32_t)sphere_vertices.size() * sizeof(float)));
+
+    //sphere_vb->SetLayout({{hammer::ShaderDataType::Float3, "a_position"}});
+    //sphere_va_->AddVertexBuffer(sphere_vb);
+
+    //hammer::Ref<hammer::IndexBuffer> sphere_ib(hammer::IndexBuffer::Creaet(
+    //    &sphere_indices[0], (uint32_t)sphere_indices.size()));
+    //sphere_va_->SetIndexBuffer(sphere_ib);
+    //sphere_shader_ = hammer::Shader::Create("sphere", sphere_vertex_src,
+    //sphere_fragment_src);
+    ////
   }
 
   void OnUpdate(hammer::Timestep ts) override {
-    //HM_INFO("Delta Time: {0}s ({1}ms)", ts.GetSeconds(), ts.GetMilliseconds());
-    if (hammer::Input::IsKeyPressed(HM_KEY_LEFT)) {
-      camera_position_.x -= camera_move_speed_ * ts;
-    }
-    else if (hammer::Input::IsKeyPressed(HM_KEY_RIGHT)) {
-      camera_position_.x += camera_move_speed_ * ts;
-    }
-    if (hammer::Input::IsKeyPressed(HM_KEY_UP)) {
-      camera_position_.y += camera_move_speed_ * ts;
-    }
-    else if (hammer::Input::IsKeyPressed(HM_KEY_DOWN)) {
-      camera_position_.y -= camera_move_speed_ * ts;
-    }
-    if (hammer::Input::IsKeyPressed(HM_KEY_A)) {
-      camera_degrees_ -= camera_rotation_speed_ * ts;
-    }
-    if (hammer::Input::IsKeyPressed(HM_KEY_D)) {
-      camera_degrees_ += camera_rotation_speed_ * ts;
-    }
+
 
     hammer::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
     hammer::RenderCommand::Clear();
 
-    camera_.set_position(camera_position_);
-    camera_.set_degrees(camera_degrees_);
+    camera_controller_.OnUpdate(ts);
 
-    hammer::Renderer::BeginScene(camera_);
+    hammer::Renderer::BeginScene(camera_controller_.GetCamera());
+
+    /*sphere_shader_->Bind();
+    std::dynamic_pointer_cast<hammer::OpenGLShader>(sphere_shader_)
+        ->UploadUniformFloat3("u_Color", square_color_);
+    hammer::Renderer::Submit(sphere_shader_, sphere_va_,
+                             glm::scale(glm::mat4(1.0f), glm::vec3(0.5f)));*/
 
     glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
@@ -198,10 +225,13 @@ class ExampleLayer : public hammer::Layer {
       }
     }
 
+    auto texture_shader = shader_library_.Get("Texture");
+
     texture_->Bind();
-    hammer::Renderer::Submit(texture_shader_, square_va_, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+    hammer::Renderer::Submit(texture_shader, square_va_,
+                             glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
     cherno_logo_texture_->Bind();
-    hammer::Renderer::Submit(texture_shader_, square_va_,
+    hammer::Renderer::Submit(texture_shader, square_va_,
                              glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 
@@ -211,6 +241,7 @@ class ExampleLayer : public hammer::Layer {
   }
 
   void OnEvent(hammer::Event& event) override {
+    camera_controller_.OnEvent(event);
   }
 
   void OnImGuiRender() override { 
@@ -220,19 +251,21 @@ class ExampleLayer : public hammer::Layer {
   }
 
  private:
-  // will use our memory managerment here instead of use hammer::Ref
+  // will use our memory managerment here instead of use hammer::Ref in the future
+  hammer::ShaderLibrary shader_library_;
   hammer::Ref<hammer::Shader> shader_;
+
   hammer::Ref<hammer::VertexArray> vertex_array_;
-  hammer::Ref<hammer::Shader> flat_color_shader_ , texture_shader_;
+
+  hammer::Ref<hammer::Shader> flat_color_shader_ ;
   hammer::Ref<hammer::VertexArray> square_va_;
+
+  hammer::Ref<hammer::VertexArray> sphere_va_;
+  hammer::Ref<hammer::Shader> sphere_shader_;
 
   hammer::Ref<hammer::Texture2D> texture_ , cherno_logo_texture_;
 
-  hammer::OrthographicCamera camera_;
-  glm::vec3 camera_position_;
-  float camera_degrees_ = 0.0f;
-  float camera_move_speed_ = 5.0f ;
-  float camera_rotation_speed_ = 180.0f;
+  hammer::OrthographicCameraController camera_controller_;
 
   glm::vec3 square_color_ = {0.2f, 0.3f, 0.8f};
 };

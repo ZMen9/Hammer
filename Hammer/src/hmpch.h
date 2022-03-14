@@ -6,13 +6,14 @@
 #include <functional>
 #include <iostream>
 
+#include <array>
 #include <vector>
 #include <string>
 #include <sstream>
 #include <unordered_map>
 #include <unordered_set>
 
-#include "Hammer/Log.h"
+#include "Hammer/Core/Log.h"
 
 #ifdef HM_PLATFORM_WINDOWS
 	#include <Windows.h>

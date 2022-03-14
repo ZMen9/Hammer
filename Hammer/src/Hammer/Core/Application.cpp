@@ -2,7 +2,7 @@
 #include <GLFW/glfw3.h>
 #include "Application.h"
 #include "Hammer/Renderer/Renderer.h"
-#include "Input.h"
+#include "Hammer/Core/Input.h"
 #include "Hammer/Core/Timestep.h"
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)

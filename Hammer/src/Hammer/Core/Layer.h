@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hammer/Core.h"
+#include "Hammer/Core/Core.h"
 #include "Hammer/Events/Event.h"
 #include "Hammer/Core/Timestep.h"
 namespace hammer {

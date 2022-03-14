@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hammer/Window.h"
+#include "Hammer/Core/Window.h"
 #include "Hammer/Renderer/GraphicsContext.h"
 #include <GLFW/glfw3.h>
 

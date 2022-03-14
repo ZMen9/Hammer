@@ -1,15 +1,16 @@
 [submodule "Hammer/vendor/spdlog"]
 	path = Hammer/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+	branch = v1.x
 [submodule "Hammer/vendor/GLFW"]
 	path = Hammer/vendor/GLFW
 	url = https://github.com/ZMen9/glfw.git
-[submodule "imgui"]
-	path = imgui
-	url = https://github.com/ZMen9/imgui.git
+	branch = master
 [submodule "Hammer/vendor/imgui"]
 	path = Hammer/vendor/imgui
 	url = https://github.com/ZMen9/imgui.git
+	branch = docking
 [submodule "Hammer/vendor/glm"]
 	path = Hammer/vendor/glm
 	url = https://github.com/g-truc/glm.git
+	branch = master

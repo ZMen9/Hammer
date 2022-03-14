@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hammer/Input.h"
+#include "Hammer/Core/Input.h"
 
 namespace hammer {
 class WindowsInput : public Input {

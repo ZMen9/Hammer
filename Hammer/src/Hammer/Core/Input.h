@@ -1,11 +1,13 @@
 #pragma once
 
-#include "Hammer/Core.h"
+#include "Hammer/Core/Core.h"
 
 namespace hammer {
 
-class HAMMER_API Input {
+class Input {
  public:
+  Input(const Input&) = delete;
+  Input& operator=(const Input&) = delete;
   inline static bool IsKeyPressed(int keycode) {
     return kInstance->IsKeyPressedImpl(keycode);
   }
@@ -20,6 +22,7 @@ class HAMMER_API Input {
   inline static float GetMouseY() { return kInstance->GetMouseYImpl(); }
 
  protected:
+  Input() = default;
   virtual bool IsKeyPressedImpl(int keycode) = 0;
   virtual bool IsMouseButtonPressedImpl(int button) = 0;
   virtual std::pair<float, float> GetMousePositionImpl() = 0;

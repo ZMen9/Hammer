@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-#include "Hammer/Core.h"
+#include "Hammer/Core/Core.h"
 
 namespace hammer {
 class Texture {
