@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hammer/Core/Core.h"
+#include "Hammer/Core/Base.h"
 #include "Hammer/Events/Event.h"
 
 namespace hammer {
@@ -15,7 +15,7 @@ struct WindowProps {
 };
 
 // Interface representing a desktop system based Window 
-class HAMMER_API Window {
+class Window {
  public:
   using EventCallbackFn = std::function<void(Event&)>;
 
@@ -30,7 +30,7 @@ class HAMMER_API Window {
 
   virtual void* GetNativeWindow() const = 0;
 
-  static Window* Create(const WindowProps& props = WindowProps());
+  static Scope<Window>Create(const WindowProps& props = WindowProps());
 };
 
 }  // namespace hammer

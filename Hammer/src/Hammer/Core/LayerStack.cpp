@@ -1,10 +1,9 @@
 #include "hmpch.h"
-#include "LayerStack.h"
+#include "Hammer/Core/LayerStack.h"
 
 
 namespace hammer {
    
-LayerStack::LayerStack() {}
 
 LayerStack::~LayerStack() {
   for (Layer* layer : layers_) {
@@ -17,12 +16,10 @@ LayerStack::~LayerStack() {
 void LayerStack::PushLayer(Layer* layer) {
   layers_.emplace(layers_.begin() + layer_insert_index_, layer);
   layer_insert_index_++;
-  layer->OnAttach();
 }
 
 void LayerStack::PushOverlay(Layer* overlay) {
   layers_.emplace_back(overlay);
-  overlay->OnAttach();
 }
 
 void LayerStack::PopLayer(Layer* layer) {

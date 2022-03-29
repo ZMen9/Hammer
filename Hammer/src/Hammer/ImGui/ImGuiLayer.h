@@ -4,14 +4,14 @@
 #include "Hammer/Events/KeyEvent.h"
 #include "Hammer/Events/MouseEvent.h"
 namespace hammer {
-class HAMMER_API ImGuiLayer : public Layer {
+class ImGuiLayer : public Layer {
  public:
   ImGuiLayer();
   ~ImGuiLayer() = default;
 
   virtual void OnAttach() override;
   virtual void OnDetach() override;
-  virtual void OnImGuiRender() override;
+  virtual void OnEvent(Event& e) override;
 
 
   void Begin();

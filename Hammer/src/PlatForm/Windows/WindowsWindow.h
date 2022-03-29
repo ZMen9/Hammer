@@ -15,20 +15,22 @@ class WindowsWindow : public Window {
   inline unsigned int width() const override { return data_.width_; }
   inline unsigned int height() const override { return data_.height_; }
 
-  inline void SetEventCallback(const EventCallbackFn& callback) override {
+  void SetEventCallback(const EventCallbackFn& callback) override {
     data_.EventCallback = callback;
   };
   void SetVSync(bool enabled) override;
   bool IsVSync() const override;
+
   
   inline virtual void* GetNativeWindow() const override { return window_; }
  private:
   virtual void Init(const WindowProps& props);
   virtual void Shutdown();
+  void SetMSAA(bool enabled);
 
  private:
   GLFWwindow* window_;
-  GraphicsContext* context_;
+  Scope<GraphicsContext> context_;
 
   struct WindowData {
     std::string title_;

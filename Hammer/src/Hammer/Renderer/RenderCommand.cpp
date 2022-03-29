@@ -1,8 +1,8 @@
 #include "hmpch.h"
-#include "RenderCommand.h"
+#include "Hammer/Renderer/RenderCommand.h"
 #include "PlatForm/OpenGL/OpenGLRendererAPI.h"
 
 
 namespace hammer {
-RendererAPI* RenderCommand::kRendererAPI = new OpenRendererAPI();
+Scope<RendererAPI> RenderCommand::kRendererAPI = RendererAPI::Create();
 } //namespace hammer

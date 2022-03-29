@@ -1,12 +1,11 @@
 #include "hmpch.h"
-#include "WindowsInput.h"
+#include "PlatForm/Windows/WindowsInput.h"
 
 #include <GLFW/glfw3.h>
 
 #include "Hammer/Core/Application.h"
 
 namespace hammer {
-Input* Input::kInstance = new WindowsInput();
 
 bool WindowsInput::IsKeyPressedImpl(int keycode) {
   auto window = static_cast<GLFWwindow*>(

@@ -10,6 +10,9 @@
     <Filter Include="src\Hammer\Core">
       <UniqueIdentifier>{AEE87AAA-1A74-E86E-2385-6B638F8F446F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Hammer\Debug">
+      <UniqueIdentifier>{8C59E4F9-7852-034C-A184-E8D08DDCE257}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Hammer\Events">
       <UniqueIdentifier>{BADDF939-26F4-F7CF-6F6B-83F1DBC0C857}</UniqueIdentifier>
     </Filter>
@@ -60,7 +63,7 @@
     <ClInclude Include="src\Hammer\Core\Application.h">
       <Filter>src\Hammer\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Hammer\Core\Core.h">
+    <ClInclude Include="src\Hammer\Core\Base.h">
       <Filter>src\Hammer\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\Core\EntryPoint.h">
@@ -89,6 +92,9 @@
     </ClInclude>
     <ClInclude Include="src\Hammer\Core\Window.h">
       <Filter>src\Hammer\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Debug\Instrumentor.h">
+      <Filter>src\Hammer\Debug</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\Events\ApplicationEvent.h">
       <Filter>src\Hammer\Events</Filter>
@@ -121,6 +127,9 @@
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\Renderer.h">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Renderer\Renderer2D.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\RendererAPI.h">
@@ -1410,9 +1419,13 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="src\Hammer\Renderer\SubTexture2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Hammer\Core\Application.cpp">
+      <Filter>src\Hammer\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\Core\Input.cpp">
       <Filter>src\Hammer\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Hammer\Core\Layer.cpp">
@@ -1424,6 +1437,9 @@
     <ClCompile Include="src\Hammer\Core\Log.cpp">
       <Filter>src\Hammer\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Hammer\Core\Window.cpp">
+      <Filter>src\Hammer\Core</Filter>
+    </ClCompile>
     <ClCompile Include="src\Hammer\ImGui\ImGuiBuild.cpp">
       <Filter>src\Hammer\ImGui</Filter>
     </ClCompile>
@@ -1431,6 +1447,9 @@
       <Filter>src\Hammer\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\Buffer.cpp">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\Renderer\GraphicsContext.cpp">
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\OrthographicCamera.cpp">
@@ -1443,6 +1462,9 @@
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\Renderer.cpp">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\Renderer\Renderer2D.cpp">
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\RendererAPI.cpp">
@@ -1487,5 +1509,6 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="src\Hammer\Renderer\SubTexture2D.cpp" />
   </ItemGroup>
 </Project>

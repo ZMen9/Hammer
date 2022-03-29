@@ -3,6 +3,10 @@
 !vendor/bin/premake
 bin-int/
 
+# Hammer Log
+
+*.log
+
 # Visual Studio files and folder
 .vs/
 **.sln

@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 
 namespace hammer {
+
 class OrthographicCamera {
  public:
   OrthographicCamera(float left, float right, float bottom, float top);

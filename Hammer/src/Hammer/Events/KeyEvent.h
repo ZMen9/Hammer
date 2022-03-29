@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Event.h"
+#include "Hammer/Events/Event.h"
 
 namespace hammer {
 
-class HAMMER_API KeyEvent : public Event {
+class KeyEvent : public Event {
  public:
   int keycode() const { return keycode_; }
 
@@ -15,7 +15,7 @@ class HAMMER_API KeyEvent : public Event {
   int keycode_;
 };
 
-class HAMMER_API KeyPressedEvent : public KeyEvent {
+class KeyPressedEvent : public KeyEvent {
  public:
   KeyPressedEvent(int keycode, int repeat_count)
       : KeyEvent(keycode), repeat_count_(repeat_count) {}
@@ -34,7 +34,7 @@ class HAMMER_API KeyPressedEvent : public KeyEvent {
   int repeat_count_;
 };
 
-class HAMMER_API KeyReleasedEvent : public KeyEvent {
+class KeyReleasedEvent : public KeyEvent {
  public:
   KeyReleasedEvent(int keycode) : KeyEvent(keycode) {}
 
@@ -47,7 +47,7 @@ class HAMMER_API KeyReleasedEvent : public KeyEvent {
   EVENT_CLASS_TYPE(kKeyReleased)
 };
 
-class HAMMER_API KeyTypedEvent : public KeyEvent {
+class KeyTypedEvent : public KeyEvent {
  public:
   KeyTypedEvent(int keycode)
       : KeyEvent(keycode){}

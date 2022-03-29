@@ -1,6 +1,6 @@
 #pragma once
-#include "Hammer/Core/Core.h"
 #include "hmpch.h"
+#include "Hammer/Core/Base.h"
 
 namespace hammer {
 
@@ -45,7 +45,7 @@ enum EventCategory {
 #define EVENT_CLASS_CATEGORY(category) \
   virtual int GetCategoryFlags() const override { return category; }
 
-class HAMMER_API Event {
+class Event {
   friend class EventDispatcher;
 
  public:

@@ -1,24 +1,24 @@
 #pragma once
 
-#include "Core.h"
-#include "spdlog/spdlog.h"
-#include "spdlog/fmt/ostr.h"
+#include "Hammer/Core/Base.h"
+#include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
 
 namespace hammer {
-class HAMMER_API Log {
+class Log {
  public:
   static void Init();
 
-  inline static std::shared_ptr<spdlog::logger>& core_logger() {
+  inline static Ref<spdlog::logger>& core_logger() {
     return core_logger_;
   }
 
-  inline static std::shared_ptr<spdlog::logger>& client_logger() {
+  inline static Ref<spdlog::logger>& client_logger() {
     return client_logger_;
   }
  private:
-  static std::shared_ptr<spdlog::logger> core_logger_;
-  static std::shared_ptr<spdlog::logger> client_logger_;
+  static Ref<spdlog::logger> core_logger_;
+  static Ref<spdlog::logger> client_logger_;
 };
 }  // namespace hammer
 
@@ -35,4 +35,4 @@ class HAMMER_API Log {
 #define HM_INFO(...)        ::hammer::Log::client_logger()->info(__VA_ARGS__)
 #define HM_WARN(...)        ::hammer::Log::client_logger()->warn(__VA_ARGS__)
 #define HM_ERROR(...)       ::hammer::Log::client_logger()->error(__VA_ARGS__)
-#define HM_CRITICAL(...)       ::hammer::Log::client_logger()->critical(__VA_ARGS__)
+#define HM_CRITICAL(...)    ::hammer::Log::client_logger()->critical(__VA_ARGS__)

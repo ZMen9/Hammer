@@ -1,48 +1,60 @@
 #include "hmpch.h"
-#include "WindowsWindow.h"
-
+#include "PlatForm/Windows/WindowsWindow.h"
 
 #include "Hammer/Events/ApplicationEvent.h"
 #include "Hammer/Events/KeyEvent.h"
 #include "Hammer/Events/MouseEvent.h"
 #include "PlatForm/OpenGL/OpenGLContext.h"
+#include "Hammer/Renderer/Renderer.h"
 
 namespace hammer {
 
-static bool kglfwInitialized = false;
+static uint8_t kglfwInitialized = 0;
 
 static void GLFWErrorCallback(int error_code, const char* description) {
   HM_CORE_ERROR("GLFW Error ( {0}): {1}", error_code, description);
 }
 
-Window* Window::Create(const WindowProps& props) {
-  return new WindowsWindow(props);
+WindowsWindow::WindowsWindow(const WindowProps& props) {
+  HM_PROFILE_FUNCTION();
+  Init(props);
 }
 
-WindowsWindow::WindowsWindow(const WindowProps& props) { Init(props); }
-
-WindowsWindow::~WindowsWindow() { Shutdown(); }
+WindowsWindow::~WindowsWindow() {
+  HM_PROFILE_FUNCTION();
+  Shutdown();
+}
 
 void WindowsWindow::Init(const WindowProps& props) {
+  HM_PROFILE_FUNCTION();
   data_.title_ = props.title_;
   data_.width_ = props.width_;
   data_.height_ = props.height_;
 
   HM_CORE_INFO("Creating window {0} ({1}, {2})", props.title_, props.width_,
                props.height_);
-  if (!kglfwInitialized) {
+  if (kglfwInitialized == 0) {
+    HM_PROFILE_SCOPE("glfwInit");
     // TODO: glfwTerminate on system shutdown
     int success = glfwInit();
     HM_CORE_ASSERT(success, "Could not initialize GLFW!");
 
     glfwSetErrorCallback(GLFWErrorCallback);
-    kglfwInitialized = true;
   }
 
-  window_ = glfwCreateWindow((int)props.width_, (int)props.height_,
-                             data_.title_.c_str(), nullptr, nullptr);
-  
-  context_ = new OpenGLContext(window_);
+  SetMSAA(false);
+
+  {
+    HM_PROFILE_SCOPE("glfwCreateWindow");
+    #if defined(HM_DEBUG)
+    if (Renderer::GetAPI() == RendererAPI::API::OpenGL)
+      glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+    #endif
+    window_ = glfwCreateWindow((int)props.width_, (int)props.height_,
+                               data_.title_.c_str(), nullptr, nullptr);
+    ++kglfwInitialized;
+  }
+  context_ = GraphicsContext::Create(window_);
   context_->Init();
 
   glfwSetWindowUserPointer(window_, &data_);
@@ -134,11 +146,13 @@ void WindowsWindow::Init(const WindowProps& props) {
 }
 
 void WindowsWindow::OnUpdate() {
+  HM_PROFILE_FUNCTION();
   glfwPollEvents();
   context_->SwapBuffers();
 }
 
 void WindowsWindow::SetVSync(bool enabled) {
+  HM_PROFILE_FUNCTION();
   if (enabled)
     glfwSwapInterval(1);
   else
@@ -149,6 +163,20 @@ void WindowsWindow::SetVSync(bool enabled) {
 bool WindowsWindow::IsVSync() const { return data_.VSync_; }
 
 
-void WindowsWindow::Shutdown() { glfwDestroyWindow(window_); }
+void WindowsWindow::Shutdown() { 
+  HM_PROFILE_FUNCTION();
+  glfwDestroyWindow(window_);
+  --kglfwInitialized;
+  if (kglfwInitialized == 0) {
+    glfwTerminate();
+  }
+
+
+}
+
+void WindowsWindow::SetMSAA(bool enabled) { 
+  if(enabled)
+    glfwWindowHint(GLFW_SAMPLES, 4); 
+}
 
 }  // namespace hammer

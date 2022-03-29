@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hammer/Core/Core.h"
+#include "Hammer/Core/Base.h"
 
 namespace hammer {
 
@@ -20,6 +20,7 @@ class Input {
   }
   inline static float GetMouseX() { return kInstance->GetMouseXImpl(); }
   inline static float GetMouseY() { return kInstance->GetMouseYImpl(); }
+  static Scope<Input> Create();
 
  protected:
   Input() = default;
@@ -30,7 +31,7 @@ class Input {
   virtual float GetMouseYImpl() = 0;
 
  private:
-  static Input* kInstance;
+  static Scope<Input> kInstance;
 };
 
 }  // namespace hammer

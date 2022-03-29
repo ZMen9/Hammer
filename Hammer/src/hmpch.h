@@ -14,6 +14,7 @@
 #include <unordered_set>
 
 #include "Hammer/Core/Log.h"
+#include "Hammer/Debug/Instrumentor.h"
 
 #ifdef HM_PLATFORM_WINDOWS
 	#include <Windows.h>

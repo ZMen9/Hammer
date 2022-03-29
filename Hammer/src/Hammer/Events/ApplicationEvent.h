@@ -1,20 +1,20 @@
 #pragma once 
 
-#include "Event.h"
-#include "Hammer/Core/Core.h"
+#include "Hammer/Events/Event.h"
+#include "Hammer/Core/Base.h"
 
 namespace hammer {
 
-class HAMMER_API WindowCloseEvent : public Event {
+class WindowCloseEvent : public Event {
  public:
-  WindowCloseEvent() {}
+  WindowCloseEvent() = default;
   
   EVENT_CLASS_TYPE(kWindowClose)
   EVENT_CLASS_CATEGORY(KEventCategoryApplication)
 
 };
 
-class HAMMER_API WindowResizeEvent : public Event {
+class WindowResizeEvent : public Event {
  public:
   WindowResizeEvent(unsigned int width, unsigned int height)
       : width_(width), height_(height) {}
@@ -35,25 +35,25 @@ class HAMMER_API WindowResizeEvent : public Event {
   unsigned int width_, height_;
 };
 
-class HAMMER_API AppTickEvent : public Event {
+class AppTickEvent : public Event {
  public:
-  AppTickEvent() {}
+  AppTickEvent() = default;
 
   EVENT_CLASS_TYPE(kAppTick)
   EVENT_CLASS_CATEGORY(KEventCategoryApplication)
 };
 
-class HAMMER_API AppUpdateEvent : public Event {
+class AppUpdateEvent : public Event {
  public:
-  AppUpdateEvent() {}
+  AppUpdateEvent() = default;
 
   EVENT_CLASS_TYPE(kAppUpdate)
   EVENT_CLASS_CATEGORY(KEventCategoryApplication)
 };
 
-class HAMMER_API AppRenderEvent : public Event {
+class AppRenderEvent : public Event {
  public:
-  AppRenderEvent() {}
+  AppRenderEvent() = default;
 
   EVENT_CLASS_TYPE(kAppRender)
   EVENT_CLASS_CATEGORY(KEventCategoryApplication)

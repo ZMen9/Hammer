@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Event.h"
-#include "Hammer/Core/Core.h"
+#include "Hammer/Events/Event.h"
+#include "Hammer/Core/Base.h"
 
 namespace hammer {
 
-class HAMMER_API MouseMovedEvent : public Event {
+class  MouseMovedEvent : public Event {
  public:
   MouseMovedEvent(float x, float y) : mouse_x_(x), mouse_y_(y) {}
 
@@ -25,7 +25,7 @@ class HAMMER_API MouseMovedEvent : public Event {
   float mouse_x_, mouse_y_;
 };
 
-class HAMMER_API MouseScrolledEvent : public Event {
+class MouseScrolledEvent : public Event {
  public:
   MouseScrolledEvent(float x, float y) : offset_x_(x), offset_y_(y) {}
 
@@ -45,7 +45,7 @@ class HAMMER_API MouseScrolledEvent : public Event {
   float offset_x_, offset_y_;
 };
 
-class HAMMER_API MouseButtonEvent : public Event {
+class MouseButtonEvent : public Event {
  public:
   inline int button() const { return button_; }
   EVENT_CLASS_CATEGORY(kEventCategoryMouseButton | kEventCategoryInput)
@@ -56,7 +56,7 @@ class HAMMER_API MouseButtonEvent : public Event {
   int button_;
 };
 
-class HAMMER_API MouseButtonPressedEvent : public MouseButtonEvent {
+class MouseButtonPressedEvent : public MouseButtonEvent {
  public:
   MouseButtonPressedEvent(int button) : MouseButtonEvent(button) {}
 
@@ -69,7 +69,7 @@ class HAMMER_API MouseButtonPressedEvent : public MouseButtonEvent {
   EVENT_CLASS_TYPE(kMouseButtonPressed)
 };
 
-class HAMMER_API MouseButtonReleasedEvent : public MouseButtonEvent {
+class MouseButtonReleasedEvent : public MouseButtonEvent {
  public:
   MouseButtonReleasedEvent(int button) : MouseButtonEvent(button) {}
 

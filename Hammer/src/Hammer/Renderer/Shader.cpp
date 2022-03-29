@@ -1,6 +1,6 @@
 #include "hmpch.h"
-#include "Shader.h"
-#include "Renderer.h"
+#include "Hammer/Renderer/Shader.h"
+#include "Hammer/Renderer/Renderer.h"
 #include "PlatForm/OpenGL/OpenGLShader.h"
 
 namespace hammer {
@@ -10,7 +10,7 @@ Ref<Shader> Shader::Create(const std::string& file_path) {
       HM_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
       return nullptr;
     case RendererAPI::API::OpenGL:
-      return std::make_shared<OpenGLShader>(file_path);
+      return CreateRef<OpenGLShader>(file_path);
   }
   HM_CORE_ASSERT(false, "Unknow RendererAPI!");
   return nullptr;
@@ -24,7 +24,7 @@ Ref<Shader> Shader::Create(const std::string& name,
       HM_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
       return nullptr;
     case RendererAPI::API::OpenGL:
-      return std::make_shared<OpenGLShader>(name, vertex_src, fragment_src);
+      return CreateRef<OpenGLShader>(name, vertex_src, fragment_src);
   }
   HM_CORE_ASSERT(false, "Unknow RendererAPI!");
   return nullptr;

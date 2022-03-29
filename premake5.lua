@@ -1,5 +1,5 @@
 workspace "Hammer"
-	architecture "x64"
+	architecture "x86_64"
 	startproject "Sandbox"
 
 	configurations
@@ -23,9 +23,12 @@ IncludeDir["ImGui"] = "Hammer/vendor/imgui/"
 IncludeDir["glm"] = "Hammer/vendor/glm"
 IncludeDir["stb_image"] = "Hammer/vendor/stb_image"
 
-include "Hammer/vendor/GLFW"
-include "Hammer/vendor/Glad"
-include "Hammer/vendor/imgui"
+group "Dependencies"
+	include "Hammer/vendor/GLFW"
+	include "Hammer/vendor/Glad"
+	include "Hammer/vendor/imgui"
+
+group ""
 
 project "Hammer"
 	location "Hammer"
@@ -52,7 +55,8 @@ project "Hammer"
 
 	defines
 	{
-		"_CRT_SECURE_NO_WARNINGS"
+		"_CRT_SECURE_NO_WARNINGS",
+		"GLFW_INCLUDE_NONE"
 	}
 
 
@@ -77,14 +81,11 @@ project "Hammer"
 
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 		
 		defines
 		{
-			"HM_PLATFORM_WINDOWS",
-			"HM_BUILD_DLL",
-			"GLFW_INCLUDE_NONE"
+			
 		}
 
 
@@ -135,11 +136,6 @@ project "Sandbox"
 	filter "system:windows"
 		cppdialect "C++17"
 		systemversion "latest"
-
-		defines
-		{
-			"HM_PLATFORM_WINDOWS"
-		}
 
 	filter "configurations:Debug"
 		defines "HM_DEBUG"

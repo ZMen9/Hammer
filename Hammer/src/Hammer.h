@@ -1,6 +1,7 @@
 #pragma once
 
 // For used by Hammer application
+#include "Hammer/Core/Base.h"
 #include "Hammer/Core/Application.h"
 #include "Hammer/Core/Layer.h"
 #include "Hammer/Core/Log.h"
@@ -19,17 +20,18 @@
 
 //----Render--------------------------
 #include "Hammer/Renderer/Renderer.h"
+#include "Hammer/Renderer/Renderer2D.h"
 #include "Hammer/Renderer/RenderCommand.h"
 
 #include "Hammer/Renderer/Buffer.h"
 #include "Hammer/Renderer/Shader.h"
 #include "Hammer/Renderer/VertexArray.h"
 #include "Hammer/Renderer/Texture.h"
-
+#include "Hammer/Renderer/SubTexture2D.h"
 #include "Hammer/Renderer/OrthographicCamera.h"
 //------------------------------------
 
 
 //----Entry Point---------------------
-#include "Hammer/Core/EntryPoint.h"
+//#include "Hammer/Core/EntryPoint.h"
 //------------------------------------

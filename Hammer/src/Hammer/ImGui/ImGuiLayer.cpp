@@ -1,9 +1,9 @@
 #include "hmpch.h"
-#include "ImGuiLayer.h"
+#include "Hammer/ImGui/ImGuiLayer.h"
 
-#include "imgui.h"
-#include "backends/imgui_impl_glfw.h"
-#include "backends/imgui_impl_opengl3.h"
+#include <imgui.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
 
 #include "Hammer/Core/Application.h"
 
@@ -18,6 +18,8 @@ ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") {}
 
 
 void ImGuiLayer::OnAttach() {
+  HM_PROFILE_FUNCTION();
+
   // Setup Dear ImGui context IMGUI_CHECKVERSION();
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
@@ -56,19 +58,28 @@ void ImGuiLayer::OnAttach() {
 }
 
 void ImGuiLayer::OnDetach() {
+  HM_PROFILE_FUNCTION();
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();
   ImGui::DestroyContext();
 }
 
+void ImGuiLayer::OnEvent(Event& e) {
+  ImGuiIO& io = ImGui::GetIO();
+  // imgui 捕获鼠标键盘事件，并且不传播事件。
+  e.handled_ |= e.IsInCategory(kEventCategoryMouse) & io.WantCaptureMouse;
+  e.handled_ |= e.IsInCategory(kEventCategoryKeyboard) & io.WantCaptureKeyboard;
+}
+
 void ImGuiLayer::Begin() { 
+  HM_PROFILE_FUNCTION();
   ImGui_ImplOpenGL3_NewFrame();
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
 }
 
 void ImGuiLayer::End() {
-
+  HM_PROFILE_FUNCTION();
   ImGuiIO& io = ImGui::GetIO();
   Application& app = Application::instance();
   io.DisplaySize =
@@ -83,11 +94,6 @@ void ImGuiLayer::End() {
     ImGui::RenderPlatformWindowsDefault();
     glfwMakeContextCurrent(backup_current_context);
   } 
-}
-
-void ImGuiLayer::OnImGuiRender() {
-  static bool show = true;
-  ImGui::ShowDemoWindow(&show);
 }
 
 }  // namespace hammer

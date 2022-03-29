@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Hammer/Core/Core.h"
+#include "Hammer/Core/Base.h"
 #include "Hammer/Events/Event.h"
 #include "Hammer/Core/Timestep.h"
 namespace hammer {
-class HAMMER_API Layer {
+class  Layer {
  public:
   Layer(const std::string& name = "Layer");
   virtual ~Layer() = default;
