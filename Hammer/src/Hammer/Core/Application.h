@@ -21,9 +21,11 @@ class  Application {
   void PushLayer(Layer* layer);
   void PushOverlay(Layer* overlay);
 
-  inline static Application& instance() { return *instance_; }
-  inline Window& window() { return *window_; }
-
+  static Application& instance() { return *instance_; }
+  ImGuiLayer* GetImGuiLayer() { return ImGuiLayer_; }
+  Window& window() { return *window_; }
+  void Close();
+  
  private: 
   void Run();
 

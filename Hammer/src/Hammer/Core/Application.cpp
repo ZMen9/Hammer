@@ -103,4 +103,6 @@ void Application::PushOverlay(Layer* overlay) {
   overlay->OnAttach();
 }
 
+void Application::Close() { running_ = false; }
+
 }  // namespace hammer

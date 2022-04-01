@@ -5,6 +5,7 @@
 #include "Hammer/Core/Application.h"
 #include "Hammer/Core/Layer.h"
 #include "Hammer/Core/Log.h"
+#include "Hammer/Core/Assert.h"
 #include "Hammer/Core/Timestep.h"
 #include "Hammer/Renderer/OrthographicCameraController.h"
 
@@ -12,6 +13,13 @@
 #include "Hammer/Core/Input.h"
 #include "Hammer/Core/KeyCode.h"
 #include "Hammer/Core/MouseCode.h"
+//------------------------------------
+
+//----ECS-----------------------------
+#include "Hammer/Scene/Scene.h"
+#include "Hammer/Scene/Components.h"
+#include "Hammer/Scene/Entity.h"
+#include "Hammer/Scene/ScriptableEntity.h"
 //------------------------------------
 
 //----GUI-----------------------------
@@ -26,6 +34,7 @@
 #include "Hammer/Renderer/Buffer.h"
 #include "Hammer/Renderer/Shader.h"
 #include "Hammer/Renderer/VertexArray.h"
+#include "Hammer/Renderer/Framebuffer.h"
 #include "Hammer/Renderer/Texture.h"
 #include "Hammer/Renderer/SubTexture2D.h"
 #include "Hammer/Renderer/OrthographicCamera.h"

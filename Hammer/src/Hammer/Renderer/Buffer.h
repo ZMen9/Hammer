@@ -98,8 +98,9 @@ struct BufferElement {
 class BufferLayout {
  public:
   BufferLayout() = default;
-
-  BufferLayout(const std::initializer_list<BufferElement>& elements)
+  // passing initializer_list by value, it is cheap to copy it(it is just a set of pointers )
+  // and it doesn't matter if its moved or not.
+  BufferLayout(std::initializer_list<BufferElement> elements)
       : elements_(elements) {
     CalculateOffsetsAndStride();
   }

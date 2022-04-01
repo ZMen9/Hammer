@@ -21,7 +21,6 @@ OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
 
 }
 
-
 OpenGLTexture2D::OpenGLTexture2D(const std::string& path) 
 		: path_(path) {
   HM_PROFILE_FUNCTION();
@@ -29,7 +28,7 @@ OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
   stbi_set_flip_vertically_on_load(1);
   stbi_uc* data = nullptr;
   {
-    HM_PROFILE_SCOPE("stbi_load - OpenGLTexture2D::OpenGLTexture2D(const std:string&)"); 
+    HM_PROFILE_SCOPE("stbi_load - OpenGLTexture2D::OpenGLTexture2D(const std::string&)"); 
     data = stbi_load(path.c_str(), &width, &height, &channels, 0);
   }
   HM_CORE_ASSERT(data, "Failed to load image!");

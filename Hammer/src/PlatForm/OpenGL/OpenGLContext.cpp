@@ -22,18 +22,10 @@ void OpenGLContext::Init() {
   HM_CORE_INFO("  Vendor: {0}", glGetString(GL_VENDOR));
   HM_CORE_INFO("  Renderer: {0}", glGetString(GL_RENDERER));
   HM_CORE_INFO("  Version: {0}", glGetString(GL_VERSION));
-
-  #ifdef HM_ENABLE_ASSERTS
-
-  int version_major;
-  int version_minor;
-  glGetIntegerv(GL_MAJOR_VERSION, &version_major);
-  glGetIntegerv(GL_MINOR_VERSION, &version_minor);
-  HM_CORE_ASSERT(
-      version_major > 4 || (version_major == 4 && version_minor >= 5),
-      "Hammer requires at least OpenGL version 4.5!")
-
-  #endif  // HM_ENABLE_ASSERTS
+	
+	HM_CORE_ASSERT(
+      GLVersion.major > 4 || (GLVersion.major == 4 && GLVersion.minor >= 5),
+      "Hazel requires at least OpenGL version 4.5!");
 }
 
 void OpenGLContext::SwapBuffers() {

@@ -1,26 +1,26 @@
 #pragma once
 
 #include "Hammer/Events/Event.h"
-
+#include "Hammer/Core/KeyCode.h"
 namespace hammer {
 
 class KeyEvent : public Event {
  public:
-  int keycode() const { return keycode_; }
+  KeyCode keycode() const { return keycode_; }
 
   EVENT_CLASS_CATEGORY(kEventCategoryKeyboard | kEventCategoryInput)
  protected:
-  KeyEvent(int keycore) : keycode_(keycore) {}
+  KeyEvent(const KeyCode keycode) : keycode_(keycode) {}
 
-  int keycode_;
+  KeyCode keycode_;
 };
 
 class KeyPressedEvent : public KeyEvent {
  public:
-  KeyPressedEvent(int keycode, int repeat_count)
+  KeyPressedEvent(const KeyCode keycode, const uint16_t repeat_count)
       : KeyEvent(keycode), repeat_count_(repeat_count) {}
 
-  inline int repeat_count() const { return repeat_count_; }
+  uint16_t repeat_count() const { return repeat_count_; }
 
   std::string ToString() const override {
     std::stringstream ss;
@@ -31,12 +31,12 @@ class KeyPressedEvent : public KeyEvent {
 
   EVENT_CLASS_TYPE(kKeyPressed)
  private:
-  int repeat_count_;
+  uint16_t repeat_count_;
 };
 
 class KeyReleasedEvent : public KeyEvent {
  public:
-  KeyReleasedEvent(int keycode) : KeyEvent(keycode) {}
+  KeyReleasedEvent(const KeyCode keycode) : KeyEvent(keycode) {}
 
   std::string ToString() const override {
     std::stringstream ss;
@@ -49,7 +49,7 @@ class KeyReleasedEvent : public KeyEvent {
 
 class KeyTypedEvent : public KeyEvent {
  public:
-  KeyTypedEvent(int keycode)
+  KeyTypedEvent(const KeyCode keycode)
       : KeyEvent(keycode){}
 
 

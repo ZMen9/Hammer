@@ -6,6 +6,9 @@
 #include <iomanip>
 #include <string>
 #include <thread>
+#include <mutex>
+#include <sstream>
+#include "Hammer/Core/Log.h"
 
 namespace hammer {
 using FloatingPointMicrosecends = std::chrono::duration<double, std::micro>;
@@ -25,6 +28,7 @@ class Instrumentor {
  public:
   Instrumentor(const Instrumentor&) = delete;
   Instrumentor& operator=(const Instrumentor&) = delete;
+  Instrumentor(Instrumentor&&) = delete;
 
   static Instrumentor& GetInstance() {
     static Instrumentor instance;
@@ -87,8 +91,13 @@ class Instrumentor {
   }
 
  private:
+  // Using RAII
+  // If a session is begun using HZ_PROFILE_BEGIN_SESSION(...) but
+  // HZ_PROFILE_END_SESSION() is not called before the program ends then the heap
+  // allocated InstrumentationSession is not deleted and the footer is not added
+  // to the file which creates malformed JSON.
   Instrumentor() : current_session_(nullptr) {}
-
+  ~Instrumentor() { EndSession(); }
   void WriteHead() {
     output_stream_ << "{\"otherData\": {},\"traceEvents\":[{}";
     output_stream_.flush();
@@ -181,7 +190,7 @@ constexpr auto CleanupOutputString(const char (&expr)[N],
 
 }  // namespace hammer
 
-#define HM_PROFILE 1
+#define HM_PROFILE 0
 #if HM_PROFILE
 
 // Resolve which function signature macro will be used. Note that this only
@@ -213,10 +222,12 @@ constexpr auto CleanupOutputString(const char (&expr)[N],
 #define HM_PROFILE_END_SESSION() \
   ::hammer::Instrumentor::GetInstance().EndSession()
 
-#define HM_PROFILE_SCOPE(name) \
- constexpr auto fixed_name =   \
-      ::hammer::InstrumentorUtils::CleanupOutputString(name, "__cdecl");\
-      ::hammer::InstrumentationTimer timer##__LINE__(fixed_name.data)
+#define HM_PROFILE_SCOPE_LINE2(name, line) \
+  constexpr auto fixed_name##line = \
+    ::hammer::InstrumentorUtils::CleanupOutputString(name, "__cdecl"); \
+    ::hammer::InstrumentationTimer timer##line(fixed_name##line.data)
+#define HM_PROFILE_SCOPE_LINE1(name, line) HM_PROFILE_SCOPE_LINE2(name, line)
+#define HM_PROFILE_SCOPE(name) HM_PROFILE_SCOPE_LINE1(name, __LINE__)
 
 #define HM_PROFILE_FUNCTION() HM_PROFILE_SCOPE(HM_FUNC_SIG)
 

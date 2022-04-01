@@ -21,13 +21,21 @@ class OrthographicCameraController {
 
   void OnEvent(Event& e);
   void OnUpdate(Timestep ts);
+  void OnResize(float width, float height);
 
-  inline OrthographicCamera& GetCamera() { return camera_; }
-  inline const OrthographicCamera& GetCamera() const { return camera_; }
+  OrthographicCamera& GetCamera() { return camera_; }
+  const OrthographicCamera& GetCamera() const { return camera_; }
 
+  void set_zoom_level(float level) {
+    zoom_level_ = level;
+    CalculateView();
+  }
+  const float zoom_level() const { return zoom_level_; }
   const OrthographicCameraBounds& GetBounds() const { return bounds_; }
 
+
  private:
+  void CalculateView();
   bool OnMouseScrolled(MouseScrolledEvent& e);
   bool OnWindowResized(WindowResizeEvent& e);
  private:

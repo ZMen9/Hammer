@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>hmpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;HM_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -99,7 +99,7 @@
       <PrecompiledHeaderFile>hmpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;HM_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -124,7 +124,7 @@
       <PrecompiledHeaderFile>hmpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;HM_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -146,6 +146,7 @@
   <ItemGroup>
     <ClInclude Include="src\Hammer.h" />
     <ClInclude Include="src\Hammer\Core\Application.h" />
+    <ClInclude Include="src\Hammer\Core\Assert.h" />
     <ClInclude Include="src\Hammer\Core\Base.h" />
     <ClInclude Include="src\Hammer\Core\EntryPoint.h" />
     <ClInclude Include="src\Hammer\Core\Input.h" />
@@ -154,6 +155,7 @@
     <ClInclude Include="src\Hammer\Core\LayerStack.h" />
     <ClInclude Include="src\Hammer\Core\Log.h" />
     <ClInclude Include="src\Hammer\Core\MouseCode.h" />
+    <ClInclude Include="src\Hammer\Core\PlatformDetection.h" />
     <ClInclude Include="src\Hammer\Core\Timestep.h" />
     <ClInclude Include="src\Hammer\Core\Window.h" />
     <ClInclude Include="src\Hammer\Debug\Instrumentor.h" />
@@ -163,6 +165,8 @@
     <ClInclude Include="src\Hammer\Events\MouseEvent.h" />
     <ClInclude Include="src\Hammer\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Hammer\Renderer\Buffer.h" />
+    <ClInclude Include="src\Hammer\Renderer\Camera.h" />
+    <ClInclude Include="src\Hammer\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Hammer\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Hammer\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Hammer\Renderer\OrthographicCameraController.h" />
@@ -174,13 +178,19 @@
     <ClInclude Include="src\Hammer\Renderer\SubTexture2D.h" />
     <ClInclude Include="src\Hammer\Renderer\Texture.h" />
     <ClInclude Include="src\Hammer\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Hammer\Scene\Components.h" />
+    <ClInclude Include="src\Hammer\Scene\Entity.h" />
+    <ClInclude Include="src\Hammer\Scene\Scene.h" />
+    <ClInclude Include="src\Hammer\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Hammer\Scene\SceneSerializer.h" />
+    <ClInclude Include="src\Hammer\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\PlatForm\OpenGL\OpenGLFramebuffer.h" />
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLVertexArray.h" />
-    <ClInclude Include="src\PlatForm\Windows\WindowsInput.h" />
     <ClInclude Include="src\PlatForm\Windows\WindowsWindow.h" />
     <ClInclude Include="src\hmpch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -602,7 +612,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Hammer\Core\Application.cpp" />
-    <ClCompile Include="src\Hammer\Core\Input.cpp" />
     <ClCompile Include="src\Hammer\Core\Layer.cpp" />
     <ClCompile Include="src\Hammer\Core\LayerStack.cpp" />
     <ClCompile Include="src\Hammer\Core\Log.cpp" />
@@ -610,6 +619,7 @@
     <ClCompile Include="src\Hammer\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Hammer\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Hammer\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Hammer\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Hammer\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Hammer\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Hammer\Renderer\OrthographicCameraController.cpp" />
@@ -621,8 +631,13 @@
     <ClCompile Include="src\Hammer\Renderer\SubTexture2D.cpp" />
     <ClCompile Include="src\Hammer\Renderer\Texture.cpp" />
     <ClCompile Include="src\Hammer\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Hammer\Scene\Entity.cpp" />
+    <ClCompile Include="src\Hammer\Scene\Scene.cpp" />
+    <ClCompile Include="src\Hammer\Scene\SceneCamera.cpp" />
+    <ClCompile Include="src\Hammer\Scene\SceneSerializer.cpp" />
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\PlatForm\OpenGL\OpenGLFramebuffer.cpp" />
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLTexture.cpp" />
@@ -643,6 +658,9 @@
     </ProjectReference>
     <ProjectReference Include="vendor\imgui\ImGui.vcxproj">
       <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\yaml-cpp\yaml-cpp.vcxproj">
+      <Project>{88F1A057-74BE-FB62-9DD7-E90A890331F1}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

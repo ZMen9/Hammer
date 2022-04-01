@@ -1,6 +1,7 @@
 #pragma once
-#include "hmpch.h"
+#include <functional>
 #include "Hammer/Core/Base.h"
+#include "Hammer/Debug/Instrumentor.h"
 
 namespace hammer {
 
@@ -49,6 +50,7 @@ class Event {
   friend class EventDispatcher;
 
  public:
+  virtual ~Event() = default;
   virtual EventType GetEventType() const = 0;
   // GetName() sure only for debug mode
   virtual const char* GetName() const = 0;
@@ -90,7 +92,8 @@ class EventDispatcher {
   template<typename T, typename F>
   bool Dispatch(const F& func) {
     if (event_.GetEventType() == T::GetStaticType()) {
-      event_.handled_ = func(static_cast<T&>(event_));
+      // once event_.handled_ has been set to true, it'll never be reset to false.
+      event_.handled_ |= func(static_cast<T&>(event_));
       return true;
     }
     return false;

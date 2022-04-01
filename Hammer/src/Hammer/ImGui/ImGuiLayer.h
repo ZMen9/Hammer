@@ -16,9 +16,12 @@ class ImGuiLayer : public Layer {
 
   void Begin();
   void End();
+  void BlockEvents(bool block) { block_events_ = block; }
+  void SetDarkThemeColors();
 
  private:
   float time_ = 0.0f;
+  bool block_events_ = true;
 };
 
 }  // namespace hammer

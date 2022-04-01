@@ -2,12 +2,13 @@
 
 #include "Hammer/Events/Event.h"
 #include "Hammer/Core/Base.h"
+#include "Hammer/Core/MouseCode.h"
 
 namespace hammer {
 
 class  MouseMovedEvent : public Event {
  public:
-  MouseMovedEvent(float x, float y) : mouse_x_(x), mouse_y_(y) {}
+  MouseMovedEvent(const float x, const float y) : mouse_x_(x), mouse_y_(y) {}
 
   inline float mouse_x() const { return mouse_x_; }
   inline float mouse_y() const { return mouse_y_; }
@@ -19,7 +20,8 @@ class  MouseMovedEvent : public Event {
   }
 
   EVENT_CLASS_TYPE(kMouseMoved)
-  EVENT_CLASS_CATEGORY(kEventCategoryMouse | kEventCategoryInput)
+  EVENT_CLASS_CATEGORY(kEventCategoryMouse | kEventCategoryInput |
+                       kEventCategoryMouseButton)
 
  private:
   float mouse_x_, mouse_y_;
@@ -27,7 +29,8 @@ class  MouseMovedEvent : public Event {
 
 class MouseScrolledEvent : public Event {
  public:
-  MouseScrolledEvent(float x, float y) : offset_x_(x), offset_y_(y) {}
+  MouseScrolledEvent(const float x, const float y)
+      : offset_x_(x), offset_y_(y) {}
 
   inline float offset_x() const { return offset_x_; }
   inline float offset_y() const { return offset_y_; }
@@ -47,18 +50,18 @@ class MouseScrolledEvent : public Event {
 
 class MouseButtonEvent : public Event {
  public:
-  inline int button() const { return button_; }
+  MouseCode button() const { return button_; }
   EVENT_CLASS_CATEGORY(kEventCategoryMouseButton | kEventCategoryInput)
 
  protected:
-  MouseButtonEvent(int button) : button_(button) {}
+  MouseButtonEvent(const MouseCode button) : button_(button) {}
 
-  int button_;
+  MouseCode button_;
 };
 
 class MouseButtonPressedEvent : public MouseButtonEvent {
  public:
-  MouseButtonPressedEvent(int button) : MouseButtonEvent(button) {}
+  MouseButtonPressedEvent(const MouseCode button) : MouseButtonEvent(button) {}
 
   std::string ToString() const override {
     std::stringstream ss;
@@ -71,7 +74,7 @@ class MouseButtonPressedEvent : public MouseButtonEvent {
 
 class MouseButtonReleasedEvent : public MouseButtonEvent {
  public:
-  MouseButtonReleasedEvent(int button) : MouseButtonEvent(button) {}
+  MouseButtonReleasedEvent(const MouseCode button) : MouseButtonEvent(button) {}
 
   std::string ToString() const override {
     std::stringstream ss;

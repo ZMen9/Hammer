@@ -22,6 +22,9 @@
     <Filter Include="src\Hammer\Renderer">
       <UniqueIdentifier>{FC42E396-68A4-C0A4-F111-07575D72F763}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Hammer\Scene">
+      <UniqueIdentifier>{33BCF2FA-1FB5-114D-48E7-F6D1343FF158}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\PlatForm">
       <UniqueIdentifier>{013EF1E4-EDA0-8089-9626-B93F82684C0C}</UniqueIdentifier>
     </Filter>
@@ -63,6 +66,9 @@
     <ClInclude Include="src\Hammer\Core\Application.h">
       <Filter>src\Hammer\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Hammer\Core\Assert.h">
+      <Filter>src\Hammer\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Hammer\Core\Base.h">
       <Filter>src\Hammer\Core</Filter>
     </ClInclude>
@@ -85,6 +91,9 @@
       <Filter>src\Hammer\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\Core\MouseCode.h">
+      <Filter>src\Hammer\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Core\PlatformDetection.h">
       <Filter>src\Hammer\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\Core\Timestep.h">
@@ -114,6 +123,12 @@
     <ClInclude Include="src\Hammer\Renderer\Buffer.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Hammer\Renderer\Camera.h">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Renderer\Framebuffer.h">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\GraphicsContext.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
@@ -138,16 +153,40 @@
     <ClInclude Include="src\Hammer\Renderer\Shader.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Hammer\Renderer\SubTexture2D.h">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\Texture.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\VertexArray.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Hammer\Scene\Components.h">
+      <Filter>src\Hammer\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Scene\Entity.h">
+      <Filter>src\Hammer\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Scene\Scene.h">
+      <Filter>src\Hammer\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Scene\SceneCamera.h">
+      <Filter>src\Hammer\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Scene\SceneSerializer.h">
+      <Filter>src\Hammer\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Scene\ScriptableEntity.h">
+      <Filter>src\Hammer\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLBuffer.h">
       <Filter>src\PlatForm\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLContext.h">
+      <Filter>src\PlatForm\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlatForm\OpenGL\OpenGLFramebuffer.h">
       <Filter>src\PlatForm\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLRendererAPI.h">
@@ -161,9 +200,6 @@
     </ClInclude>
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLVertexArray.h">
       <Filter>src\PlatForm\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PlatForm\Windows\WindowsInput.h">
-      <Filter>src\PlatForm\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\PlatForm\Windows\WindowsWindow.h">
       <Filter>src\PlatForm\Windows</Filter>
@@ -1419,13 +1455,9 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Hammer\Renderer\SubTexture2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Hammer\Core\Application.cpp">
-      <Filter>src\Hammer\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Hammer\Core\Input.cpp">
       <Filter>src\Hammer\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Hammer\Core\Layer.cpp">
@@ -1447,6 +1479,9 @@
       <Filter>src\Hammer\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\Buffer.cpp">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\Renderer\Framebuffer.cpp">
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\GraphicsContext.cpp">
@@ -1473,16 +1508,34 @@
     <ClCompile Include="src\Hammer\Renderer\Shader.cpp">
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Hammer\Renderer\SubTexture2D.cpp">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\Texture.cpp">
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\VertexArray.cpp">
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Hammer\Scene\Entity.cpp">
+      <Filter>src\Hammer\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\Scene\Scene.cpp">
+      <Filter>src\Hammer\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\Scene\SceneCamera.cpp">
+      <Filter>src\Hammer\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\Scene\SceneSerializer.cpp">
+      <Filter>src\Hammer\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\PlatForm\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLContext.cpp">
+      <Filter>src\PlatForm\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlatForm\OpenGL\OpenGLFramebuffer.cpp">
       <Filter>src\PlatForm\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLRendererAPI.cpp">
@@ -1509,6 +1562,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Hammer\Renderer\SubTexture2D.cpp" />
   </ItemGroup>
 </Project>

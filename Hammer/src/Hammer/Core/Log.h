@@ -1,8 +1,12 @@
 #pragma once
 
 #include "Hammer/Core/Base.h"
-#include <spdlog/spdlog.h>
-#include <spdlog/fmt/ostr.h>
+
+// This ignores all warnings raised inside External headers
+#pragma warning(push, 0)
+#include <spdlog/spdlog.h>// place here first
+#include <spdlog/fmt/ostr.h>// place here behind
+#pragma warning(pop)
 
 namespace hammer {
 class Log {

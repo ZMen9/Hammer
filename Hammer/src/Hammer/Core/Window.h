@@ -1,5 +1,6 @@
 #pragma once
 
+#include <sstream>
 #include "Hammer/Core/Base.h"
 #include "Hammer/Events/Event.h"
 
@@ -10,7 +11,7 @@ struct WindowProps {
   unsigned int height_;
 
   WindowProps(const std::string& title = "Hammer Engine",
-              unsigned int width = 1920, unsigned int height = 1080)
+              unsigned int width = 1600, unsigned int height = 900)
       : title_(title), width_(width), height_(height) {}
 };
 

@@ -76,4 +76,6 @@ void main()
 		case 31: texColor *= texture(u_Textures[31], v_textcoord * v_TilingFactor); break;
 	}
 	color = texColor;
+	// color = texture(u_Textures[(int)v_TextIdx], v_textcoord * v_TilingFactor) * v_Color;
+	// this does not work on all gpu or drivers
 }

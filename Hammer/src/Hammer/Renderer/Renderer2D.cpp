@@ -92,7 +92,7 @@ void Renderer2D::Init() {
   kData.texture_shader->Bind();
   kData.texture_shader->SetIntArray("u_Textures", samplers,
                                     kData.max_texture_slots);
-  // set all texture slots to 0
+  // set first texture slot to 0
   kData.texture_slots[0] = kData.white_texture;
 
   // 设置矩形四个顶点初始位置
@@ -115,23 +115,28 @@ void Renderer2D::BeginScene(const OrthographicCamera& camera) {
   kData.texture_shader->SetMat4("u_ViewProjection",
                                 camera.view_projection_matrix());
 
-  kData.quad_index_count = 0;
-  kData.quad_vertex_buffer_ptr = kData.quad_vertex_buffer_base;
+  StartBatch();
+}
 
-  kData.texture_slot_idx = 1;
+void Renderer2D::BeginScene(const Camera& camera, const glm::mat4& transform) {
+  HM_PROFILE_FUNCTION();
+  glm::mat4 view_projection = camera.projection() * glm::inverse(transform);
+  kData.texture_shader->Bind();
+  kData.texture_shader->SetMat4("u_ViewProjection", view_projection);
+  StartBatch();
 }
 
 void Renderer2D::EndScene() { 
   HM_PROFILE_FUNCTION();
-  uint32_t data_size = (uint32_t)( (uint8_t*)kData.quad_vertex_buffer_ptr -
-                       (uint8_t*)kData.quad_vertex_buffer_base );
-  kData.quad_vertex_buffer->SetData(kData.quad_vertex_buffer_base, data_size);
-
   Flush();
 }
 
 void Renderer2D::Flush() {
   if (kData.quad_index_count == 0) return;
+
+  uint32_t data_size = (uint32_t)((uint8_t*)kData.quad_vertex_buffer_ptr -
+                                  (uint8_t*)kData.quad_vertex_buffer_base);
+  kData.quad_vertex_buffer->SetData(kData.quad_vertex_buffer_base, data_size);
 
   // Bind textures
   for (uint32_t i = 0; i < kData.texture_slot_idx; i++)
@@ -141,32 +146,27 @@ void Renderer2D::Flush() {
   kData.stats.draw_calls++;
 }
 
-void Renderer2D::FlushAndReset() {
-  EndScene();
+
+void Renderer2D::StartBatch() {
   kData.quad_index_count = 0;
   kData.quad_vertex_buffer_ptr = kData.quad_vertex_buffer_base;
   kData.texture_slot_idx = 1;
 }
 
-void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size,
-                          const glm::vec4& color) {
-  DrawQuad({position.x, position.y, 0.0f}, size, color);
+void Renderer2D::NextBatch() {
+  Flush();
+  StartBatch();
 }
 
-void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size,
-                          const glm::vec4& color) {
+void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color) {
   HM_PROFILE_FUNCTION();
-  if (kData.quad_index_count >= Renderer2DData::max_indices) FlushAndReset();
+  if (kData.quad_index_count >= Renderer2DData::max_indices) NextBatch();
 
-  const float texture_idx = 0.0f;// white texture
+  const float texture_idx = 0.0f;  // default white texture
   constexpr size_t quad_vertex_count = 4;
   constexpr glm::vec2 texture_coords[] = {
       {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}};
   const float tiling_factor = 1.0f;
-
-
-  glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
-                        glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
 
   for (size_t i = 0; i < quad_vertex_count; i++) {
     kData.quad_vertex_buffer_ptr->position =
@@ -181,42 +181,45 @@ void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size,
   kData.stats.quad_count++;
 }
 
-
 void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size,
-                          const Ref<Texture2D>& texture, float tiling_factor,
-                          const glm::vec4& tint_color) {
-  DrawQuad({position.x, position.y, 0.0f}, size, texture, tiling_factor,
-           tint_color);
+                          const glm::vec4& color) {
+  DrawQuad({position.x, position.y, 0.0f}, size, color);
 }
 
 void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size,
-                          const Ref<Texture2D>& texture, float tiling_factor,
+                          const glm::vec4& color) {
+  HM_PROFILE_FUNCTION();
+  glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
+                        glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
+  DrawQuad(transform, color);
+}
+
+void Renderer2D::DrawQuad(const glm::mat4& transform,
+                          const Ref<Texture2D>& texture,
+                          float tiling_factor,
                           const glm::vec4& tint_color) {
   HM_PROFILE_FUNCTION();
-  if (kData.quad_index_count >= Renderer2DData::max_indices) FlushAndReset();
+  if (kData.quad_index_count >= Renderer2DData::max_indices) NextBatch();
 
   constexpr size_t quad_vertex_count = 4;
   constexpr glm::vec2 texture_coords[] = {
       {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}};
-
   // 查询纹理是否存在
   float texture_idx = 0.0f;
   for (uint32_t i = 1; i < kData.texture_slot_idx; ++i) {
-    if (*kData.texture_slots[i].get() == *texture.get()) {
+    if (*kData.texture_slots[i] == *texture) {
       texture_idx = (float)i;
       break;
     }
   }
   // 纹理不存在则添加纹理
   if (texture_idx == 0.0f) {
-    if (kData.texture_slot_idx >= Renderer2DData::max_texture_slots) FlushAndReset();
+    if (kData.texture_slot_idx >= Renderer2DData::max_texture_slots)
+      NextBatch();
     texture_idx = (float)kData.texture_slot_idx;
     kData.texture_slots[kData.texture_slot_idx] = texture;
     kData.texture_slot_idx++;
   }
-
-  glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
-                        glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
 
   for (size_t i = 0; i < quad_vertex_count; i++) {
     kData.quad_vertex_buffer_ptr->position =
@@ -232,6 +235,24 @@ void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size,
 }
 
 void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size,
+                          const Ref<Texture2D>& texture,
+                          float tiling_factor /*= 1.0f*/,
+                          const glm::vec4& tint_color /*= glm::vec4(1.0f)*/) {
+  DrawQuad({position.x, position.y, 0.0f}, size, texture, tiling_factor,
+           tint_color);
+}
+
+void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size,
+                          const Ref<Texture2D>& texture, float tiling_factor,
+                          const glm::vec4& tint_color) {
+  HM_PROFILE_FUNCTION();
+  glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
+                        glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
+  DrawQuad(transform, texture, tiling_factor, tint_color);
+}
+
+
+void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size,
                           const Ref<SubTexture2D>& subtexture,
                           float tiling_factor /*= 1.0f*/,
                           const glm::vec4& tint_color /*= glm::vec4(1.0f)*/) {
@@ -244,7 +265,7 @@ void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size,
                           float tiling_factor /*= 1.0f*/,
                           const glm::vec4& tint_color /*= glm::vec4(1.0f)*/) {
   HM_PROFILE_FUNCTION();
-  if (kData.quad_index_count >= Renderer2DData::max_indices) FlushAndReset();
+  if (kData.quad_index_count >= Renderer2DData::max_indices) NextBatch();
 
   constexpr size_t quad_vertex_count = 4;
   const glm::vec2* texture_coords = subtexture->GetTexCoords();
@@ -253,7 +274,7 @@ void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size,
   // 查询纹理是否存在
   float texture_idx = 0.0f;
   for (uint32_t i = 1; i < kData.texture_slot_idx; ++i) {
-    if (*kData.texture_slots[i].get() == *texture.get()) {
+    if (*kData.texture_slots[i] == *texture) {
       texture_idx = (float)i;
       break;
     }
@@ -261,7 +282,7 @@ void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size,
   // 纹理不存在则添加纹理
   if (texture_idx == 0.0f) {
     if (kData.texture_slot_idx >= Renderer2DData::max_texture_slots)
-      FlushAndReset();
+      NextBatch();
     texture_idx = (float)kData.texture_slot_idx;
     kData.texture_slots[kData.texture_slot_idx] = texture;
     kData.texture_slot_idx++;
@@ -293,30 +314,13 @@ void Renderer2D::DrawRotatedQuad(const glm::vec3& position,
                                  const glm::vec2& size, float degree,
                                  const glm::vec4& color) {
   HM_PROFILE_FUNCTION();
-  if (kData.quad_index_count >= Renderer2DData::max_indices) FlushAndReset();
-  const float texture_idx = 0.0f;  // White Texture
-  const float tiling_factor = 1.0f;
-  constexpr size_t quad_vertex_count = 4;
-  constexpr glm::vec2 texture_coords[] = {
-      {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}};
 
   glm::mat4 transform =
       glm::translate(glm::mat4(1.0f), position) *
       glm::rotate(glm::mat4(1.0f), glm::radians(degree), {0.0f, 0.0f, 1.0f}) *
       glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
 
-  for (size_t i = 0; i < quad_vertex_count; i++) {
-    kData.quad_vertex_buffer_ptr->position =
-        transform * kData.quad_vertex_position[i];
-    kData.quad_vertex_buffer_ptr->color = color;
-    kData.quad_vertex_buffer_ptr->tex_cood = texture_coords[i];
-    kData.quad_vertex_buffer_ptr->tex_idx = texture_idx;
-    kData.quad_vertex_buffer_ptr->tiling_factor = tiling_factor;
-    kData.quad_vertex_buffer_ptr++;
-  }
-
-  kData.quad_index_count += 6;
-  kData.stats.quad_count++;
+	DrawQuad(transform, color);
 }
 
 void Renderer2D::DrawRotatedQuad(
@@ -332,45 +336,13 @@ void Renderer2D::DrawRotatedQuad(
     const Ref<Texture2D>& texture, float tiling_factor /*= 1.0f*/,
     const glm::vec4& tint_color /*= glm::vec4(1.0f)*/) {
   HM_PROFILE_FUNCTION();
-  if (kData.quad_index_count >= Renderer2DData::max_indices) FlushAndReset();
-  constexpr size_t quad_vertex_count = 4;
-  constexpr glm::vec2 texture_coords[] = {
-      {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}};
-
-  // 查询纹理是否存在
-  float texture_idx = 0.0f;
-  for (uint32_t i = 1; i < kData.texture_slot_idx; ++i) {
-    if (*kData.texture_slots[i].get() == *texture.get()) {
-      texture_idx = (float)i;
-      break;
-    }
-  }
-  // 纹理不存在则添加纹理
-  if (texture_idx == 0.0f) {
-    if (kData.texture_slot_idx >= Renderer2DData::max_texture_slots)
-      FlushAndReset();
-    texture_idx = (float)kData.texture_slot_idx;
-    kData.texture_slots[kData.texture_slot_idx] = texture;
-    kData.texture_slot_idx++;
-  }
   
   glm::mat4 transform =
       glm::translate(glm::mat4(1.0f), position) *
       glm::rotate(glm::mat4(1.0f), glm::radians(degree), {0.0f, 0.0f, 1.0f}) *
       glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
 
-  for (size_t i = 0; i < quad_vertex_count; i++) {
-    kData.quad_vertex_buffer_ptr->position =
-        transform * kData.quad_vertex_position[i];
-    kData.quad_vertex_buffer_ptr->color = tint_color;
-    kData.quad_vertex_buffer_ptr->tex_cood = texture_coords[i];
-    kData.quad_vertex_buffer_ptr->tex_idx = texture_idx;
-    kData.quad_vertex_buffer_ptr->tiling_factor = tiling_factor;
-    kData.quad_vertex_buffer_ptr++;
-  }
-
-  kData.quad_index_count += 6;
-  kData.stats.quad_count++;
+  DrawQuad(transform, texture, tiling_factor, tint_color);
 }
 
 void Renderer2D::DrawRotatedQuad(
@@ -386,7 +358,7 @@ void Renderer2D::DrawRotatedQuad(
     const Ref<SubTexture2D>& subtexture, float tiling_factor /*= 1.0f*/,
     const glm::vec4& tint_color /*= glm::vec4(1.0f)*/) {
   HM_PROFILE_FUNCTION();
-  if (kData.quad_index_count >= Renderer2DData::max_indices) FlushAndReset();
+  if (kData.quad_index_count >= Renderer2DData::max_indices) NextBatch();
   constexpr size_t quad_vertex_count = 4;
 
   const glm::vec2* texture_coords = subtexture->GetTexCoords();
@@ -395,7 +367,7 @@ void Renderer2D::DrawRotatedQuad(
   // 查询纹理是否存在
   float texture_idx = 0.0f;
   for (uint32_t i = 1; i < kData.texture_slot_idx; ++i) {
-    if (*kData.texture_slots[i].get() == *texture.get()) {
+    if (*kData.texture_slots[i] == *texture) {
       texture_idx = (float)i;
       break;
     }
@@ -403,7 +375,7 @@ void Renderer2D::DrawRotatedQuad(
   // 纹理不存在则添加纹理
   if (texture_idx == 0.0f) {
     if (kData.texture_slot_idx >= Renderer2DData::max_texture_slots)
-      FlushAndReset();
+      NextBatch();
     texture_idx = (float)kData.texture_slot_idx;
     kData.texture_slots[kData.texture_slot_idx] = texture;
     kData.texture_slot_idx++;

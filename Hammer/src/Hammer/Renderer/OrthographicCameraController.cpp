@@ -22,24 +22,24 @@ void OrthographicCameraController::OnEvent(Event& e) {
 
 void OrthographicCameraController::OnUpdate(Timestep ts) {
   HM_PROFILE_FUNCTION();
-  if (Input::IsKeyPressed(HM_KEY_A)) {
+  if (Input::IsKeyPressed(key::A)) {
     camera_position_.x -= cos(glm::radians(camera_degrees_)) * camera_translation_speed_ * ts;
     camera_position_.y -=
         sin(glm::radians(camera_degrees_)) * camera_translation_speed_ * ts;
   }
-  else if (Input::IsKeyPressed(HM_KEY_D)) {
+  else if (Input::IsKeyPressed(key::D)) {
     camera_position_.x +=
         cos(glm::radians(camera_degrees_)) * camera_translation_speed_ * ts;
     camera_position_.y +=
         sin(glm::radians(camera_degrees_)) * camera_translation_speed_ * ts;
   }
-  if (Input::IsKeyPressed(HM_KEY_W)) {
+  if (Input::IsKeyPressed(key::W)) {
     camera_position_.x +=
         -sin(glm::radians(camera_degrees_)) * camera_translation_speed_ * ts;
     camera_position_.y +=
         cos(glm::radians(camera_degrees_)) * camera_translation_speed_ * ts;
   }
-  else if (Input::IsKeyPressed(HM_KEY_S)) {
+  else if (Input::IsKeyPressed(key::S)) {
     camera_position_.x -=
         -sin(glm::radians(camera_degrees_)) * camera_translation_speed_ * ts;
     camera_position_.y -=
@@ -50,9 +50,9 @@ void OrthographicCameraController::OnUpdate(Timestep ts) {
   camera_translation_speed_ = zoom_level_;
 
   if (rotation_) {
-    if (Input::IsKeyPressed(HM_KEY_Q))
+    if (Input::IsKeyPressed(key::Q))
       camera_degrees_ += camera_rotation_speed_ * ts;
-    if (Input::IsKeyPressed(HM_KEY_E))
+    if (Input::IsKeyPressed(key::E))
       camera_degrees_ -= camera_rotation_speed_ * ts;
     if (camera_degrees_ > 180.0f) {
       camera_degrees_ -= 360.0f;
@@ -64,24 +64,33 @@ void OrthographicCameraController::OnUpdate(Timestep ts) {
   }
 }
 
+void OrthographicCameraController::OnResize(float width, float height) {
+  aspect_ratio_ = width / height;
+  camera_.set_projection(-aspect_ratio_ * zoom_level_,
+                         aspect_ratio_ * zoom_level_, -zoom_level_,
+                         zoom_level_);
+}
+
+void OrthographicCameraController::CalculateView() {
+  bounds_ = {-aspect_ratio_ * zoom_level_, aspect_ratio_ * zoom_level_,
+             -zoom_level_, zoom_level_};
+  camera_.set_projection(bounds_.left, bounds_.right, bounds_.bottom,
+                         bounds_.top);
+}
+
 bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e) {
   HM_PROFILE_FUNCTION();
   zoom_level_ -= e.offset_y() * 0.25f;
   zoom_level_ = std::max(zoom_level_, 0.25f);
-  bounds_ = {-aspect_ratio_ * zoom_level_, aspect_ratio_ * zoom_level_,
-           -zoom_level_, zoom_level_};
-  camera_.set_projection(bounds_.left, bounds_.right, bounds_.bottom, bounds_.top);
+  CalculateView();
   return false;
 }
 
 bool OrthographicCameraController::OnWindowResized(WindowResizeEvent& e) {
   HM_PROFILE_FUNCTION();
-  aspect_ratio_ = (float)e.width() / (float)e.height();
-  bounds_ = {-aspect_ratio_ * zoom_level_, aspect_ratio_ * zoom_level_,
-             -zoom_level_, zoom_level_};
-  camera_.set_projection(bounds_.left, bounds_.right, bounds_.bottom,
-                         bounds_.top);
+  OnResize((float)e.width(), (float)e.height());
   return false;
 }
+
 
 }  // namespace hammer

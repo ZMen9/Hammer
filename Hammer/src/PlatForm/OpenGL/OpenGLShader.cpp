@@ -149,7 +149,7 @@ void OpenGLShader::UploadUniformMat4(const std::string& name,
 std::string OpenGLShader::ReadFile(const std::string& file_path) {
   HM_PROFILE_FUNCTION();
   std::string result;
-  std::ifstream in(file_path, std::ios::in | std::ios::binary);
+  std::ifstream in(file_path, std::ios::in | std::ios::binary);// ifstream closes itself due to RAII
   if (in) {
       in.seekg(0, std::ios::end);
       size_t size = in.tellg();
