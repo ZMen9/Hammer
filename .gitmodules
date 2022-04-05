@@ -17,3 +17,9 @@
 [submodule "Hammer/vendor/yaml-cpp"]
 	path = Hammer/vendor/yaml-cpp
 	url = https://github.com/ZMen9/yaml-cpp.git
+[submodule "Hammer/vendor/ImGuizmo"]
+	path = Hammer/vendor/ImGuizmo
+	url = https://github.com/ZMen9/ImGuizmo.git
+[submodule "Hammer/vendor/Box2D"]
+	path = Hammer/vendor/Box2D
+	url = https://github.com/ZMen9/box2d.git
