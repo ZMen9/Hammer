@@ -7,7 +7,7 @@
 namespace hammer {
 void OpenGLMessageCallback(unsigned source, unsigned type, unsigned id,
                            unsigned severity, int length, const char* message,
-                           const void* userParam) {
+                           const void* user_param) {
   switch (severity) {
     case GL_DEBUG_SEVERITY_HIGH:
       HM_CORE_CRITICAL(message);
@@ -40,6 +40,7 @@ void OpenGLRendererAPI::Init() {
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_DEPTH_TEST);
+  glEnable(GL_LINE_SMOOTH);
   // glEnable(GL_MULTISAMPLE);
   // glDepthFunc(GL_LESS);
 }
@@ -61,10 +62,19 @@ void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vetex_array, uint32_
   // glEnable(GL_CULL_FACE);
   // glCullFace(GL_BACK);
   // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  vetex_array->Bind();
   uint32_t count =
       index_count ? index_count : vetex_array->GetIndexBuffer()->GetCount() ;
   glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
-  glBindTexture(GL_TEXTURE_2D, 0);
+  //glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+void OpenGLRendererAPI::DrawLines(const Ref<VertexArray>& vetex_array,
+                                  uint32_t vertex_count) {
+  vetex_array->Bind();
+  glDrawArrays(GL_LINES, 0, vertex_count);
+}
+
+void OpenGLRendererAPI::SetLineWidth(float width) { glLineWidth(width); }
 
 }  // namespace hammer

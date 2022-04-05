@@ -20,7 +20,6 @@ class ImGuiLayer : public Layer {
   void SetDarkThemeColors();
 
  private:
-  float time_ = 0.0f;
   bool block_events_ = true;
 };
 

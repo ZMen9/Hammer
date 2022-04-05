@@ -10,7 +10,9 @@ namespace hammer {
 
 Application* Application::instance_ = nullptr;
 
-Application::Application() {
+Application::Application(const std::string& name, ApplicationCommandLineArgs args) 
+    :commandline_args_(args){
+
   HM_CORE_ASSERT(!instance_, "Application already exists!");
   HM_PROFILE_FUNCTION();
   instance_ = this;

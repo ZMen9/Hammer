@@ -67,16 +67,24 @@ void OpenGLVertexArray::AddVertexBuffer(
       case ShaderDataType::Float:
       case ShaderDataType::Float2:
       case ShaderDataType::Float3:
-      case ShaderDataType::Float4:
+      case ShaderDataType::Float4: {
+        glEnableVertexAttribArray(vertex_buffer_index_);
+        glVertexAttribPointer(vertex_buffer_index_, element.GetComponentCount(),
+                              ShaderDataTypeToOpenGLBaseType(element.type_),
+                              element.normalized_ ? GL_TRUE : GL_FALSE,
+                              layout.stride(), (const void*)element.offset_);
+        vertex_buffer_index_++;
+        break;
+      }
       case ShaderDataType::Int:
       case ShaderDataType::Int2:
       case ShaderDataType::Int3:
       case ShaderDataType::Int4:
       case ShaderDataType::Bool: {
         glEnableVertexAttribArray(vertex_buffer_index_);
-        glVertexAttribPointer(vertex_buffer_index_, element.GetComponentCount(),
+        // not glVertexAttribPointer()
+        glVertexAttribIPointer(vertex_buffer_index_, element.GetComponentCount(),
                               ShaderDataTypeToOpenGLBaseType(element.type_),
-                              element.normalized_ ? GL_TRUE : GL_FALSE,
                               layout.stride(), (const void*)element.offset_);
         vertex_buffer_index_++;
         break;

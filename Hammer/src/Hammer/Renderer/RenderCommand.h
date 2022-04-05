@@ -17,9 +17,15 @@ class RenderCommand {
 
   static void Clear() { kRendererAPI->Clear(); }
 
-  static void DrawIndexed(const Ref<VertexArray>& vetex_array, uint32_t count = 0) {
-    kRendererAPI->DrawIndexed(vetex_array, count);
+  static void DrawIndexed(const Ref<VertexArray>& vetex_array, uint32_t index_count = 0) {
+    kRendererAPI->DrawIndexed(vetex_array, index_count);
   }
+  static void DrawLines(const Ref<VertexArray>& vetex_array,
+    uint32_t vertext_count = 0) {
+    kRendererAPI->DrawLines(vetex_array, vertext_count);
+  }
+
+  static void SetLineWidth(float width) { kRendererAPI->SetLineWidth(width); }
 
  private:
   static Scope<RendererAPI> kRendererAPI;

@@ -1,6 +1,8 @@
 #pragma once
 #include "Hammer/Scene/Scene.h"
 #include "entt.hpp"
+#include "Hammer/Core/UUID.h"
+#include "Hammer/Scene/Components.h"
 
 namespace hammer {
 class Entity {
@@ -17,6 +19,13 @@ class Entity {
     scene_->OnComponentAdded<T>(*this, component);
     return component;
   }
+  template <typename T, typename... Args>
+  T& AddOrReplaceComponent(Args&&... args) {
+    T& component = scene_->registry_.emplace_or_replace<T>(entity_handle_,
+                                                std::forward<Args>(args)...);
+    scene_->OnComponentAdded<T>(*this, component);
+    return component;
+  }
   template<typename T>
   T& GetComponent() {
     HM_CORE_ASSERT(HasComponent<T>(), "Entity does not have component!");
@@ -24,14 +33,15 @@ class Entity {
   }
   template <typename T>
   bool HasComponent() {
-    return scene_->registry_.any_of<T>(entity_handle_);
+    return scene_->registry_.all_of<T>(entity_handle_);
   }
   template <typename T>
   void RemoveComponent() {
     HM_CORE_ASSERT(HasComponent<T>(), "Entity does not have component!");
     scene_->registry_.remove<T>(entity_handle_);
   }
-
+  UUID GetUUID() { return GetComponent<IDComponent>().id; }
+  const std::string& GetName() { return GetComponent<TagComponent>().tag; }
   operator bool() const { return entity_handle_ != entt::null; }
   operator entt::entity() const { return entity_handle_; }
   operator uint32_t() const {return static_cast<uint32_t>(entity_handle_);}

@@ -1,8 +1,8 @@
 #pragma once
 #include <glm/glm.hpp>
 #include "Hammer/Renderer/Shader.h"
-typedef unsigned int GLenum;
 namespace hammer {
+typedef unsigned int GLenum;
 class OpenGLShader : public Shader {
  public:
   OpenGLShader(const std::string& name, 
@@ -18,6 +18,8 @@ class OpenGLShader : public Shader {
   virtual void SetIntArray(const std::string& name, int* values,
                            uint32_t count) override;
   virtual void SetFloat(const std::string& name, float value) override;
+  virtual void SetFloat2(const std::string& name,
+                         const glm::vec2& value) override;
   virtual void SetFloat3(const std::string& name,
                          const glm::vec3& value) override;
   virtual void SetFloat4(const std::string& name,
@@ -39,9 +41,20 @@ class OpenGLShader : public Shader {
  private:
   std::string ReadFile(const std::string& file_path);
   std::unordered_map<GLenum, std::string> PreProcess(const std::string& source);
-  void Compile(const std::unordered_map<GLenum, std::string>& shaderSources);
+
+  void CompileOrGetVulkanBinaries(
+      const std::unordered_map<GLenum, std::string>& shader_sources);
+  void CompileOrGetOpenGLBinaries();
+  void CreateProgram();
+  void Reflect(GLenum stage, const std::vector<uint32_t>& shader_data);
  private:
   uint32_t renderer_id_;
+  std::string file_path_;
   std::string shader_name_;
+
+  std::unordered_map<GLenum, std::vector<uint32_t>> vulkan_spirv_;
+  // stage and data(uint32_t type in the cache file)
+  std::unordered_map<GLenum, std::vector<uint32_t>> opengl_spirv_;
+  std::unordered_map<GLenum, std::string> opengl_source_code_;
 };
 } // namespace hammer

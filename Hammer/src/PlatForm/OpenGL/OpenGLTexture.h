@@ -13,6 +13,7 @@ class OpenGLTexture2D : public Texture2D {
   virtual uint32_t heigth() const override { return height_; }
   virtual void Bind(uint32_t slot = 0) const override;
   virtual void SetData(void* data, uint32_t size) override;
+  virtual bool IsLoaded() const override { return is_load_; }
   virtual uint32_t GetRenderID() const override { return renderer_id_; }
 
   virtual bool operator==(const Texture& other) const override {
@@ -24,5 +25,6 @@ class OpenGLTexture2D : public Texture2D {
   uint32_t width_, height_;
   uint32_t renderer_id_;
   GLenum internal_format_, data_format_;
+  bool is_load_ = false;
 };
 }  // namespace hammer

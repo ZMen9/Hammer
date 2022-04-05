@@ -12,3 +12,7 @@ bin-int/
 **.vcxproj
 **.vcxproj.filters
 **.vcxproj.user
+# Directories
+Hammer/vendor/VulkanSDK
+Hammer-Editor/assets/cache
+scripts/__pycache__

@@ -7,11 +7,13 @@
 
 class Sandbox : public hammer::Application {
  public:
-  Sandbox() {
+  Sandbox(hammer::ApplicationCommandLineArgs args) {
     // PushLayer(new ExampleLayer());
     PushLayer(new Sandbox2D());
   }
   ~Sandbox(){};
 };
 
-hammer::Application* hammer::CreateApplication() { return new Sandbox(); }
+hammer::Application* hammer::CreateApplication(hammer::ApplicationCommandLineArgs args) {
+  return new Sandbox(args);
+}

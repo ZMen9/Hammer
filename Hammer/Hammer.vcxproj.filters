@@ -19,11 +19,17 @@
     <Filter Include="src\Hammer\ImGui">
       <UniqueIdentifier>{40C442FA-2CBD-614C-55EF-46D141474158}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Hammer\Math">
+      <UniqueIdentifier>{2F2980AA-9BB4-ED6E-A4C5-706310D0496F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Hammer\Renderer">
       <UniqueIdentifier>{FC42E396-68A4-C0A4-F111-07575D72F763}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Hammer\Scene">
       <UniqueIdentifier>{33BCF2FA-1FB5-114D-48E7-F6D1343FF158}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Hammer\Utils">
+      <UniqueIdentifier>{765020FB-6249-3F4D-8B7B-24D277D31E59}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\PlatForm">
       <UniqueIdentifier>{013EF1E4-EDA0-8089-9626-B93F82684C0C}</UniqueIdentifier>
@@ -36,6 +42,9 @@
     </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\ImGuizmo">
+      <UniqueIdentifier>{73BF7F4C-DF4A-ED10-E85B-700554664911}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor\glm">
       <UniqueIdentifier>{829FC5A8-6E57-07F6-D75E-E051C335A2E6}</UniqueIdentifier>
@@ -96,7 +105,13 @@
     <ClInclude Include="src\Hammer\Core\PlatformDetection.h">
       <Filter>src\Hammer\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Hammer\Core\Timer.h">
+      <Filter>src\Hammer\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Hammer\Core\Timestep.h">
+      <Filter>src\Hammer\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Core\UUID.h">
       <Filter>src\Hammer\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\Core\Window.h">
@@ -120,10 +135,16 @@
     <ClInclude Include="src\Hammer\ImGui\ImGuiLayer.h">
       <Filter>src\Hammer\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Hammer\Math\Math.h">
+      <Filter>src\Hammer\Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\Buffer.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\Camera.h">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hammer\Renderer\EditorCamera.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\Framebuffer.h">
@@ -159,6 +180,9 @@
     <ClInclude Include="src\Hammer\Renderer\Texture.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Hammer\Renderer\UniformBuffer.h">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Hammer\Renderer\VertexArray.h">
       <Filter>src\Hammer\Renderer</Filter>
     </ClInclude>
@@ -180,6 +204,9 @@
     <ClInclude Include="src\Hammer\Scene\ScriptableEntity.h">
       <Filter>src\Hammer\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Hammer\Utils\PlatformUtils.h">
+      <Filter>src\Hammer\Utils</Filter>
+    </ClInclude>
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLBuffer.h">
       <Filter>src\PlatForm\OpenGL</Filter>
     </ClInclude>
@@ -198,6 +225,9 @@
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLTexture.h">
       <Filter>src\PlatForm\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\PlatForm\OpenGL\OpenGLUniformBuffer.h">
+      <Filter>src\PlatForm\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLVertexArray.h">
       <Filter>src\PlatForm\OpenGL</Filter>
     </ClInclude>
@@ -206,6 +236,9 @@
     </ClInclude>
     <ClInclude Include="src\hmpch.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\ImGuizmo\ImGuizmo.h">
+      <Filter>vendor\ImGuizmo</Filter>
     </ClInclude>
     <ClInclude Include="vendor\glm\glm\common.hpp">
       <Filter>vendor\glm\glm</Filter>
@@ -1469,6 +1502,9 @@
     <ClCompile Include="src\Hammer\Core\Log.cpp">
       <Filter>src\Hammer\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Hammer\Core\UUID.cpp">
+      <Filter>src\Hammer\Core</Filter>
+    </ClCompile>
     <ClCompile Include="src\Hammer\Core\Window.cpp">
       <Filter>src\Hammer\Core</Filter>
     </ClCompile>
@@ -1478,7 +1514,13 @@
     <ClCompile Include="src\Hammer\ImGui\ImGuiLayer.cpp">
       <Filter>src\Hammer\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\Hammer\Math\Math.cpp">
+      <Filter>src\Hammer\Math</Filter>
+    </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\Buffer.cpp">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hammer\Renderer\EditorCamera.cpp">
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\Framebuffer.cpp">
@@ -1514,6 +1556,9 @@
     <ClCompile Include="src\Hammer\Renderer\Texture.cpp">
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Hammer\Renderer\UniformBuffer.cpp">
+      <Filter>src\Hammer\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Hammer\Renderer\VertexArray.cpp">
       <Filter>src\Hammer\Renderer</Filter>
     </ClCompile>
@@ -1547,10 +1592,16 @@
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLTexture.cpp">
       <Filter>src\PlatForm\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\PlatForm\OpenGL\OpenGLUniformBuffer.cpp">
+      <Filter>src\PlatForm\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLVertexArray.cpp">
       <Filter>src\PlatForm\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\PlatForm\Windows\WindowsInput.cpp">
+      <Filter>src\PlatForm\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlatForm\Windows\WindowsPlatformUtils.cpp">
       <Filter>src\PlatForm\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\PlatForm\Windows\WindowsWindow.cpp">
@@ -1558,6 +1609,9 @@
     </ClCompile>
     <ClCompile Include="src\hmpch.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\ImGuizmo\ImGuizmo.cpp">
+      <Filter>vendor\ImGuizmo</Filter>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>

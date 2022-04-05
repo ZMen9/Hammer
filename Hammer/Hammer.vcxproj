@@ -77,11 +77,11 @@
       <PrecompiledHeaderFile>hmpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;HM_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\Box2D\include;vendor\yaml-cpp\include;vendor\ImGuizmo;C:\VulkanSDK\1.2.170.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -90,7 +90,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;vendor\VulkanSDK\Lib\shaderc_sharedd.lib;vendor\VulkanSDK\Lib\spirv-cross-cored.lib;vendor\VulkanSDK\Lib\spirv-cross-glsld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -99,13 +99,13 @@
       <PrecompiledHeaderFile>hmpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;HM_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\Box2D\include;vendor\yaml-cpp\include;vendor\ImGuizmo;C:\VulkanSDK\1.2.170.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -115,7 +115,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;C:\VulkanSDK\1.2.170.0\Lib\shaderc_shared.lib;C:\VulkanSDK\1.2.170.0\Lib\spirv-cross-core.lib;C:\VulkanSDK\1.2.170.0\Lib\spirv-cross-glsl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -124,13 +124,13 @@
       <PrecompiledHeaderFile>hmpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;HM_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\Box2D\include;vendor\yaml-cpp\include;vendor\ImGuizmo;C:\VulkanSDK\1.2.170.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -140,7 +140,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;C:\VulkanSDK\1.2.170.0\Lib\shaderc_shared.lib;C:\VulkanSDK\1.2.170.0\Lib\spirv-cross-core.lib;C:\VulkanSDK\1.2.170.0\Lib\spirv-cross-glsl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -156,7 +156,9 @@
     <ClInclude Include="src\Hammer\Core\Log.h" />
     <ClInclude Include="src\Hammer\Core\MouseCode.h" />
     <ClInclude Include="src\Hammer\Core\PlatformDetection.h" />
+    <ClInclude Include="src\Hammer\Core\Timer.h" />
     <ClInclude Include="src\Hammer\Core\Timestep.h" />
+    <ClInclude Include="src\Hammer\Core\UUID.h" />
     <ClInclude Include="src\Hammer\Core\Window.h" />
     <ClInclude Include="src\Hammer\Debug\Instrumentor.h" />
     <ClInclude Include="src\Hammer\Events\ApplicationEvent.h" />
@@ -164,8 +166,10 @@
     <ClInclude Include="src\Hammer\Events\KeyEvent.h" />
     <ClInclude Include="src\Hammer\Events\MouseEvent.h" />
     <ClInclude Include="src\Hammer\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Hammer\Math\Math.h" />
     <ClInclude Include="src\Hammer\Renderer\Buffer.h" />
     <ClInclude Include="src\Hammer\Renderer\Camera.h" />
+    <ClInclude Include="src\Hammer\Renderer\EditorCamera.h" />
     <ClInclude Include="src\Hammer\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Hammer\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Hammer\Renderer\OrthographicCamera.h" />
@@ -177,6 +181,7 @@
     <ClInclude Include="src\Hammer\Renderer\Shader.h" />
     <ClInclude Include="src\Hammer\Renderer\SubTexture2D.h" />
     <ClInclude Include="src\Hammer\Renderer\Texture.h" />
+    <ClInclude Include="src\Hammer\Renderer\UniformBuffer.h" />
     <ClInclude Include="src\Hammer\Renderer\VertexArray.h" />
     <ClInclude Include="src\Hammer\Scene\Components.h" />
     <ClInclude Include="src\Hammer\Scene\Entity.h" />
@@ -184,15 +189,18 @@
     <ClInclude Include="src\Hammer\Scene\SceneCamera.h" />
     <ClInclude Include="src\Hammer\Scene\SceneSerializer.h" />
     <ClInclude Include="src\Hammer\Scene\ScriptableEntity.h" />
+    <ClInclude Include="src\Hammer\Utils\PlatformUtils.h" />
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLFramebuffer.h" />
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLTexture.h" />
+    <ClInclude Include="src\PlatForm\OpenGL\OpenGLUniformBuffer.h" />
     <ClInclude Include="src\PlatForm\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\PlatForm\Windows\WindowsWindow.h" />
     <ClInclude Include="src\hmpch.h" />
+    <ClInclude Include="vendor\ImGuizmo\ImGuizmo.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_fixes.hpp" />
@@ -615,10 +623,13 @@
     <ClCompile Include="src\Hammer\Core\Layer.cpp" />
     <ClCompile Include="src\Hammer\Core\LayerStack.cpp" />
     <ClCompile Include="src\Hammer\Core\Log.cpp" />
+    <ClCompile Include="src\Hammer\Core\UUID.cpp" />
     <ClCompile Include="src\Hammer\Core\Window.cpp" />
     <ClCompile Include="src\Hammer\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Hammer\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Hammer\Math\Math.cpp" />
     <ClCompile Include="src\Hammer\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Hammer\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\Hammer\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Hammer\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Hammer\Renderer\OrthographicCamera.cpp" />
@@ -630,6 +641,7 @@
     <ClCompile Include="src\Hammer\Renderer\Shader.cpp" />
     <ClCompile Include="src\Hammer\Renderer\SubTexture2D.cpp" />
     <ClCompile Include="src\Hammer\Renderer\Texture.cpp" />
+    <ClCompile Include="src\Hammer\Renderer\UniformBuffer.cpp" />
     <ClCompile Include="src\Hammer\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Hammer\Scene\Entity.cpp" />
     <ClCompile Include="src\Hammer\Scene\Scene.cpp" />
@@ -641,11 +653,16 @@
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLTexture.cpp" />
+    <ClCompile Include="src\PlatForm\OpenGL\OpenGLUniformBuffer.cpp" />
     <ClCompile Include="src\PlatForm\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\PlatForm\Windows\WindowsInput.cpp" />
+    <ClCompile Include="src\PlatForm\Windows\WindowsPlatformUtils.cpp" />
     <ClCompile Include="src\PlatForm\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\hmpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="vendor\ImGuizmo\ImGuizmo.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
@@ -658,6 +675,9 @@
     </ProjectReference>
     <ProjectReference Include="vendor\imgui\ImGui.vcxproj">
       <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\Box2D\Box2D.vcxproj">
+      <Project>{A434E80C-1049-10BE-D9CA-B31D459E0CEF}</Project>
     </ProjectReference>
     <ProjectReference Include="vendor\yaml-cpp\yaml-cpp.vcxproj">
       <Project>{88F1A057-74BE-FB62-9DD7-E90A890331F1}</Project>

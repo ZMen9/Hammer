@@ -159,7 +159,7 @@ class InstrumentationTimer {
   std::chrono::time_point<std::chrono::steady_clock> start_time_point_;
 };
 
-namespace InstrumentorUtils {
+namespace instrumentorutils {
 
 template <size_t N>
 struct ChangeResult {
@@ -185,7 +185,7 @@ constexpr auto CleanupOutputString(const char (&expr)[N],
   return result;
 }
 
-}
+} //namespace instrumentorutils
 
 
 }  // namespace hammer
@@ -224,7 +224,7 @@ constexpr auto CleanupOutputString(const char (&expr)[N],
 
 #define HM_PROFILE_SCOPE_LINE2(name, line) \
   constexpr auto fixed_name##line = \
-    ::hammer::InstrumentorUtils::CleanupOutputString(name, "__cdecl"); \
+    ::hammer::instrumentorutils::CleanupOutputString(name, "__cdecl"); \
     ::hammer::InstrumentationTimer timer##line(fixed_name##line.data)
 #define HM_PROFILE_SCOPE_LINE1(name, line) HM_PROFILE_SCOPE_LINE2(name, line)
 #define HM_PROFILE_SCOPE(name) HM_PROFILE_SCOPE_LINE1(name, __LINE__)

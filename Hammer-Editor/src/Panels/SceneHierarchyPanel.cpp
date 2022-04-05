@@ -1,35 +1,44 @@
 #include "SceneHierarchyPanel.h"
+#include <cstring>
 #include <imgui/imgui.h>
 #include <imgui/imgui_internal.h>
 #include "glm/gtc/type_ptr.hpp"
+/* The Microsoft C++ compiler is non-compliant with the C++ standard and needs
+ * the following definition to disable a security warning on std::strncpy().
+ */
+#ifdef _MSVC_LANG
+#define _CRT_SECURE_NO_WARNINGS
+#endif
 
 namespace hammer {
+extern const std::filesystem::path global_asset_path;
 SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context) {
   SetContext(context);
 }
 
 void SceneHierarchyPanel::SetContext(const Ref<Scene>& context) {
   scene_context_ = context;
+  entity_selection_context_ = {};
 }
 
 void SceneHierarchyPanel::OnImGuiRender() {
   ImGui::Begin("Scene Hierarchy");
+  
+  if (scene_context_) {
+    scene_context_->registry_.each([=](auto entityID) {
+      Entity entity{entityID, scene_context_.get()};
+      DrawEntityNode(entity);
+    });
+    if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+      entity_selection_context_ = {};
 
-  scene_context_->registry_.each([=](auto entityID) {
-    Entity entity{entityID, scene_context_.get()};
-    DrawEntityNode(entity);
-  });
-
-  if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
-    entity_selection_context_ = {};
-
-  if (ImGui::BeginPopupContextWindow(0, 1, false)) {
-    if (ImGui::MenuItem("Create Empty Entity")) {
-      scene_context_->CreateEntity("Empty Entity");
+    if (ImGui::BeginPopupContextWindow(0, 1, false)) {
+      if (ImGui::MenuItem("Create Empty Entity")) {
+        scene_context_->CreateEntity("Empty Entity");
+      }
+      ImGui::EndPopup();
     }
-    ImGui::EndPopup();
   }
-
   ImGui::End();// Scene Hierarchy
 
   ImGui::Begin("Properties");
@@ -37,6 +46,10 @@ void SceneHierarchyPanel::OnImGuiRender() {
     DrawComponents(entity_selection_context_);
   }
   ImGui::End();// Properties
+}
+
+void SceneHierarchyPanel::SetSelectedEntity(Entity entity) {
+  entity_selection_context_ = entity;
 }
 
 void SceneHierarchyPanel::DrawEntityNode(Entity entity) {
@@ -143,8 +156,8 @@ template<typename T, typename UIFunction>
 static void DrawComponent(const std::string& name, Entity entity,
   UIFunction uiFunction) {
   const ImGuiTreeNodeFlags treeNodeFlags =
-      ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap |
-      ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth |
+      ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed |
+      ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap |
       ImGuiTreeNodeFlags_FramePadding;
   if (entity.HasComponent<T>()) {
     auto& component = entity.GetComponent<T>();
@@ -175,29 +188,62 @@ static void DrawComponent(const std::string& name, Entity entity,
 }
 
 void SceneHierarchyPanel::DrawComponents(Entity entity) {
-  // imgui show tag
+  // imgui show tag in HierarchyPanel
   if (entity.HasComponent<TagComponent>()) {
     auto& tag = entity.GetComponent<TagComponent>().tag;
 
+    // ImGui::InputText can be changed,so we need a str buffer with enough capacity
     char buffer[256];
     memset(buffer, 0, sizeof(buffer));
-    strcpy_s(buffer, sizeof(buffer), tag.c_str());
+    std::strncpy(buffer, tag.c_str(), sizeof(buffer));
     if (ImGui::InputText("##Tag", buffer, sizeof(buffer)))
       tag = std::string(buffer);
   }
-  // AddComponent operation
+  // AddComponent operation in HierarchyPanel
   ImGui::SameLine();
   ImGui::PushItemWidth(-1);
 
   if (ImGui::Button("Add Component")) ImGui::OpenPopup("AddComponent");
   if (ImGui::BeginPopup("AddComponent")) {
-    if (ImGui::MenuItem("Camera")) {
-      entity_selection_context_.AddComponent<CameraComponent>();
-      ImGui::CloseCurrentPopup();
+    if (!entity_selection_context_.HasComponent<CameraComponent>()) {
+      if (ImGui::MenuItem("Camera")) {
+        entity_selection_context_.AddComponent<CameraComponent>();
+        ImGui::CloseCurrentPopup();
+      }
     }
-    if (ImGui::MenuItem("Sprite Renderer")) {
-      entity_selection_context_.AddComponent<SpriteRendererComponent>();
-      ImGui::CloseCurrentPopup();
+
+    if (!entity_selection_context_.HasComponent<SpriteRendererComponent>()) {
+      if (ImGui::MenuItem("Sprite Renderer")) {
+        entity_selection_context_.AddComponent<SpriteRendererComponent>();
+        ImGui::CloseCurrentPopup();
+      }
+    }
+
+    if (!entity_selection_context_.HasComponent<CircleRendererComponent>()) {
+      if (ImGui::MenuItem("Circle Renderer")) {
+        entity_selection_context_.AddComponent<CircleRendererComponent>();
+        ImGui::CloseCurrentPopup();
+      }
+    }
+    
+    if (!entity_selection_context_.HasComponent<Rigidbody2DComponent>()) {
+      if (ImGui::MenuItem("Rigidbody 2D")) {
+        entity_selection_context_.AddComponent<Rigidbody2DComponent>();
+        ImGui::CloseCurrentPopup();
+      }
+    }
+
+    if (!entity_selection_context_.HasComponent<BoxCollider2DComponent>()) {
+      if (ImGui::MenuItem("BoxCollider 2D")) {
+        entity_selection_context_.AddComponent<BoxCollider2DComponent>();
+        ImGui::CloseCurrentPopup();
+      }
+    }
+    if (!entity_selection_context_.HasComponent<CircleCollider2DComponent>()) {
+      if (ImGui::MenuItem("CircleCollider 2D")) {
+        entity_selection_context_.AddComponent<CircleCollider2DComponent>();
+        ImGui::CloseCurrentPopup();
+      }
     }
     ImGui::EndPopup();
   }
@@ -268,10 +314,81 @@ void SceneHierarchyPanel::DrawComponents(Entity entity) {
                       &component.fixed_aspect_ratio);
     }
   });
-
+  // imgui show Sprite properties
   DrawComponent<SpriteRendererComponent>(
       "Sprite Renderer", entity, [](auto& component) {
         ImGui::ColorEdit4("Color", glm::value_ptr(component.color));
+        ImGui::Button("Texture", ImVec2(100.0f, 0.0f));
+        if (ImGui::BeginDragDropTarget()) {
+          if (const ImGuiPayload* payload =
+                  ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM")) {
+            const wchar_t* path = (const wchar_t*)payload->Data;
+            std::filesystem::path texturePath =
+                std::filesystem::path(global_asset_path) / path;
+            Ref<Texture2D> texture = Texture2D::Create(texturePath.string());
+            if (texture->IsLoaded()) {
+              component.texture = texture;
+            } else {
+              HM_WARN("Could not load texture {0}",
+                      texturePath.filename().string());
+            }
+          }
+          ImGui::EndDragDropTarget();
+        }
+        ImGui::DragFloat("Tiling Factor", &component.tiling_factor, 0.1f, 0.0f,
+                         100.0f);
+      });
+
+  DrawComponent<CircleRendererComponent>(
+      "Circle Renderer", entity, [](auto& component) {
+        ImGui::ColorEdit4("Color", glm::value_ptr(component.color));
+        ImGui::DragFloat("Thickness", &component.thickness, 0.025f, 0.0f, 1.0f);
+        ImGui::DragFloat("Fade", &component.fade, 0.00025f, 0.0f, 1.0f);
+      });
+
+  DrawComponent<Rigidbody2DComponent>("Rigidbody 2D", entity,
+                                      [](auto& component) {
+        const char* bodyTypeStrings[] = {"Static", "Dynamic", "Kinematic"};
+        const char* currentBodyTypeString =
+            bodyTypeStrings[(int)component.type];
+        if (ImGui::BeginCombo("Body Type", currentBodyTypeString)) {
+          for (int i = 0; i < 2; i++) {
+            bool isSelected = currentBodyTypeString == bodyTypeStrings[i];
+            if (ImGui::Selectable(bodyTypeStrings[i], isSelected)) {
+              currentBodyTypeString = bodyTypeStrings[i];
+              component.type = (Rigidbody2DComponent::BodyType)i;
+            }
+
+            if (isSelected) ImGui::SetItemDefaultFocus();
+          }
+
+          ImGui::EndCombo();
+        }
+        ImGui::Checkbox("Fixed Rotation", &component.fixed_rotation);
+  });
+
+  DrawComponent<BoxCollider2DComponent>(
+      "BoxCollider 2D", entity, [](auto& component) {
+        ImGui::DragFloat2("Offset", glm::value_ptr(component.offset));
+        ImGui::DragFloat2("Size", glm::value_ptr(component.size));
+        ImGui::DragFloat("Density", &component.density, 0.01f, 0.0f, 1.0f);
+        ImGui::DragFloat("Friction", &component.friction, 0.01f, 0.0f, 1.0f);
+        ImGui::DragFloat("Restitution", &component.restitution, 0.01f, 0.0f,
+                         1.0f);
+        ImGui::DragFloat("Restitution Threshold",
+                         &component.restitution_threshold, 0.01f, 0.0f);
+      });
+
+  DrawComponent<CircleCollider2DComponent>(
+      "CircleCollider 2D", entity, [](auto& component) {
+        ImGui::DragFloat2("Offset", glm::value_ptr(component.offset));
+        ImGui::DragFloat("Radius", &component.radius);
+        ImGui::DragFloat("Density", &component.density, 0.01f, 0.0f, 1.0f);
+        ImGui::DragFloat("Friction", &component.friction, 0.01f, 0.0f, 1.0f);
+        ImGui::DragFloat("Restitution", &component.restitution, 0.01f, 0.0f,
+                         1.0f);
+        ImGui::DragFloat("Restitution Threshold",
+                         &component.restitution_threshold, 0.01f, 0.0f);
       });
 }
 

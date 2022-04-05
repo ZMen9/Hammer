@@ -11,5 +11,8 @@ class OpenGLRendererAPI : public RendererAPI {
   virtual void SetClearColor(const glm::vec4& color) override;
   virtual void Clear() override;
   virtual void DrawIndexed(const Ref<VertexArray>& vetex_array, uint32_t index_count = 0) override;
+  virtual void DrawLines(const Ref<VertexArray>& vetex_array,
+                         uint32_t vertex_count) override;
+  virtual void SetLineWidth(float width) override;
 };
 }// namespace hammer

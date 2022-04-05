@@ -6,11 +6,14 @@
 namespace hammer {
 class HammerEditor : public Application {
  public:
-  HammerEditor() {
+  HammerEditor(ApplicationCommandLineArgs args) 
+      : Application("Hammer Editor", args) {
     PushLayer(new EditorLayer());
   }
   ~HammerEditor(){};
 };
 
-Application* CreateApplication() { return new HammerEditor(); }
+Application* CreateApplication(ApplicationCommandLineArgs args) {
+  return new HammerEditor(args);
+}
 }  // namespace hammer
